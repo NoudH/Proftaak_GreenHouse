@@ -17,8 +17,6 @@ namespace Project_Greenhouse
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-            //remove computer virus
-            delete system32
         }
     }
 }
