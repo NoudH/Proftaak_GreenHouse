@@ -33,15 +33,9 @@
             this.TabGraphs = new System.Windows.Forms.TabPage();
             this.TabLiveFeed = new System.Windows.Forms.TabPage();
             this.tabLogs = new System.Windows.Forms.TabPage();
-<<<<<<< HEAD
             this.TxtLogging = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabLogs.SuspendLayout();
-=======
-            this.button1 = new System.Windows.Forms.Button();
-            this.tabControl1.SuspendLayout();
-            this.TabLogin.SuspendLayout();
->>>>>>> ced78a206a041fa758880ff6cc8d0eb215fba60f
             this.SuspendLayout();
             // 
             // tabControl1
@@ -58,10 +52,6 @@
             // 
             // TabLogin
             // 
-<<<<<<< HEAD
-=======
-            this.TabLogin.Controls.Add(this.button1);
->>>>>>> ced78a206a041fa758880ff6cc8d0eb215fba60f
             this.TabLogin.Location = new System.Drawing.Point(4, 22);
             this.TabLogin.Name = "TabLogin";
             this.TabLogin.Size = new System.Drawing.Size(805, 465);
@@ -99,7 +89,6 @@
             this.tabLogs.Text = "Logs";
             this.tabLogs.UseVisualStyleBackColor = true;
             // 
-<<<<<<< HEAD
             // TxtLogging
             // 
             this.TxtLogging.Location = new System.Drawing.Point(0, 0);
@@ -107,16 +96,6 @@
             this.TxtLogging.Name = "TxtLogging";
             this.TxtLogging.Size = new System.Drawing.Size(805, 465);
             this.TxtLogging.TabIndex = 0;
-=======
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(439, 156);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
->>>>>>> ced78a206a041fa758880ff6cc8d0eb215fba60f
             // 
             // Form1
             // 
@@ -127,12 +106,8 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.tabControl1.ResumeLayout(false);
-<<<<<<< HEAD
             this.tabLogs.ResumeLayout(false);
             this.tabLogs.PerformLayout();
-=======
-            this.TabLogin.ResumeLayout(false);
->>>>>>> ced78a206a041fa758880ff6cc8d0eb215fba60f
             this.ResumeLayout(false);
 
         }
@@ -144,11 +119,9 @@
         private System.Windows.Forms.TabPage TabLiveFeed;
         private System.Windows.Forms.TabPage TabLogin;
         private System.Windows.Forms.TabPage tabLogs;
-<<<<<<< HEAD
+
         private System.Windows.Forms.TextBox TxtLogging;
-=======
-        private System.Windows.Forms.Button button1;
->>>>>>> ced78a206a041fa758880ff6cc8d0eb215fba60f
+
     }
 }
 
