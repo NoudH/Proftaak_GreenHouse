@@ -29,11 +29,13 @@
         private void InitializeComponent()
         {
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.TabLogin = new System.Windows.Forms.TabPage();
             this.TabGraphs = new System.Windows.Forms.TabPage();
             this.TabLiveFeed = new System.Windows.Forms.TabPage();
-            this.TabLogin = new System.Windows.Forms.TabPage();
             this.tabLogs = new System.Windows.Forms.TabPage();
+            this.TxtLogging = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
+            this.tabLogs.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -47,6 +49,15 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(813, 491);
             this.tabControl1.TabIndex = 0;
+            // 
+            // TabLogin
+            // 
+            this.TabLogin.Location = new System.Drawing.Point(4, 22);
+            this.TabLogin.Name = "TabLogin";
+            this.TabLogin.Size = new System.Drawing.Size(805, 465);
+            this.TabLogin.TabIndex = 2;
+            this.TabLogin.Text = "Login";
+            this.TabLogin.UseVisualStyleBackColor = true;
             // 
             // TabGraphs
             // 
@@ -68,23 +79,23 @@
             this.TabLiveFeed.Text = "Live Feed";
             this.TabLiveFeed.UseVisualStyleBackColor = true;
             // 
-            // TabLogin
-            // 
-            this.TabLogin.Location = new System.Drawing.Point(4, 22);
-            this.TabLogin.Name = "TabLogin";
-            this.TabLogin.Size = new System.Drawing.Size(805, 465);
-            this.TabLogin.TabIndex = 2;
-            this.TabLogin.Text = "Login";
-            this.TabLogin.UseVisualStyleBackColor = true;
-            // 
             // tabLogs
             // 
+            this.tabLogs.Controls.Add(this.TxtLogging);
             this.tabLogs.Location = new System.Drawing.Point(4, 22);
             this.tabLogs.Name = "tabLogs";
             this.tabLogs.Size = new System.Drawing.Size(805, 465);
             this.tabLogs.TabIndex = 3;
             this.tabLogs.Text = "Logs";
             this.tabLogs.UseVisualStyleBackColor = true;
+            // 
+            // TxtLogging
+            // 
+            this.TxtLogging.Location = new System.Drawing.Point(0, 0);
+            this.TxtLogging.Multiline = true;
+            this.TxtLogging.Name = "TxtLogging";
+            this.TxtLogging.Size = new System.Drawing.Size(805, 465);
+            this.TxtLogging.TabIndex = 0;
             // 
             // Form1
             // 
@@ -95,6 +106,8 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.tabControl1.ResumeLayout(false);
+            this.tabLogs.ResumeLayout(false);
+            this.tabLogs.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -106,6 +119,7 @@
         private System.Windows.Forms.TabPage TabLiveFeed;
         private System.Windows.Forms.TabPage TabLogin;
         private System.Windows.Forms.TabPage tabLogs;
+        private System.Windows.Forms.TextBox TxtLogging;
     }
 }
 
