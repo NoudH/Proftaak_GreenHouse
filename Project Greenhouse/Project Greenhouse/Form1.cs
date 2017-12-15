@@ -109,5 +109,33 @@ namespace Project_Greenhouse
             plantenLijst.Remove(FindPlant(LbPlanten.SelectedItem.ToString()));
             LbPlanten.Items.RemoveAt(LbPlanten.SelectedIndex);
         }
+
+        private void DtpGraphs_ValueChanged(object sender, EventArgs e)
+        {
+            if (OfdDatafile.FileName != "")
+            {
+                string[] data = File.ReadAllLines(OfdDatafile.FileName);
+                for (int i = 0; i < data.Length; i += 6)
+                {
+                    if (DateTime.Parse(data[i + 4]).ToShortDateString() == DtpGraphs.Value.ToShortDateString())
+                    {
+                        ChartTemp.Series[0].Points.AddXY(DateTime.Parse(data[i + 4]).ToShortTimeString(), double.Parse(data[i]));
+                        ChartHumidity.Series[0].Points.AddXY(DateTime.Parse(data[i + 4]).ToShortTimeString(), double.Parse(data[i + 1]));
+                        ChartMoisture.Series[0].Points.AddXY(DateTime.Parse(data[i + 4]).ToShortTimeString(), double.Parse(data[i + 2]));
+                        ChartMoisture.Series[1].Points.AddXY(DateTime.Parse(data[i + 4]).ToShortTimeString(), double.Parse(data[i + 3]));
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("No file selected!", "Error!");
+            }
+        }
+
+        private void BtnOpenFile_Click(object sender, EventArgs e)
+        {
+            OfdDatafile.Filter = "Text file (*.txt) | *.txt";
+            OfdDatafile.ShowDialog();
+        }
     }
 }
