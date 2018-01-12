@@ -6,32 +6,18 @@ using System.Threading.Tasks;
 
 namespace Project_Greenhouse
 {
-    class Plant
+    class PlantSoort
     {
         private string naam;
-        private int water;
-        private string soort;
 
-        public Plant(string _naam, int _water, string _soort)
+        public PlantSoort(string _naam)
         {
             naam = _naam;
-            water = _water;
-            soort = _soort;
         }
 
         public string Naam
         {
             get { return naam; }
-        }
-
-        public int Water
-        {
-            get { return water; }
-        }
-
-        public string Soort
-        {
-            get { return soort; }
         }
 
         public override string ToString()
