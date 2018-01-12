@@ -1,0 +1,17 @@
+//Temperatuur Kas
+//Luchtvochtigheid
+//Grondvochtigheid 1
+//Grondvochtigheid 2
+//Datum + Timestamp
+
+2
+10
+4
+15
+11/9/2002 04:20
+
+2.3412
+10.6123
+4.2123
+15.723
+19/12/2017 16:28

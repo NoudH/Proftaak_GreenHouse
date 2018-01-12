@@ -34,7 +34,11 @@
             this.TabLiveFeed = new System.Windows.Forms.TabPage();
             this.tabLogs = new System.Windows.Forms.TabPage();
             this.TxtLogging = new System.Windows.Forms.TextBox();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.btnScanFiles = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
+            this.TabGraphs.SuspendLayout();
             this.tabLogs.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,6 +65,9 @@
             // 
             // TabGraphs
             // 
+            this.TabGraphs.Controls.Add(this.btnScanFiles);
+            this.TabGraphs.Controls.Add(this.dateTimePicker2);
+            this.TabGraphs.Controls.Add(this.dateTimePicker1);
             this.TabGraphs.Location = new System.Drawing.Point(4, 22);
             this.TabGraphs.Name = "TabGraphs";
             this.TabGraphs.Padding = new System.Windows.Forms.Padding(3);
@@ -97,6 +104,30 @@
             this.TxtLogging.Size = new System.Drawing.Size(805, 465);
             this.TxtLogging.TabIndex = 0;
             // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(8, 34);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker1.TabIndex = 1;
+            // 
+            // dateTimePicker2
+            // 
+            this.dateTimePicker2.Location = new System.Drawing.Point(214, 34);
+            this.dateTimePicker2.Name = "dateTimePicker2";
+            this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker2.TabIndex = 2;
+            // 
+            // btnScanFiles
+            // 
+            this.btnScanFiles.Location = new System.Drawing.Point(8, 6);
+            this.btnScanFiles.Name = "btnScanFiles";
+            this.btnScanFiles.Size = new System.Drawing.Size(75, 23);
+            this.btnScanFiles.TabIndex = 3;
+            this.btnScanFiles.Text = "Scan";
+            this.btnScanFiles.UseVisualStyleBackColor = true;
+            this.btnScanFiles.Click += new System.EventHandler(this.btnScanFiles_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -106,6 +137,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.tabControl1.ResumeLayout(false);
+            this.TabGraphs.ResumeLayout(false);
             this.tabLogs.ResumeLayout(false);
             this.tabLogs.PerformLayout();
             this.ResumeLayout(false);
@@ -121,7 +153,8 @@
         private System.Windows.Forms.TabPage tabLogs;
 
         private System.Windows.Forms.TextBox TxtLogging;
-
+        private System.Windows.Forms.Button btnScanFiles;
+        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
     }
 }
-
