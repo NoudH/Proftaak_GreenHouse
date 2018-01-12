@@ -9,13 +9,13 @@ namespace Project_Greenhouse
 {
     class DatabaseIO
     {
+        //Metingen Veriabele
         private DateTime datumtijd;
         private float lichtintensietijd;
         private float temperatuur;
         private float luchtvochtigheid;
         private float grondvochtigheidp1;
         private float grondvochtigheidp2;
-
         List<DateTime> datumtijdls = new List<DateTime>();
         List<float> lichtintensietijdls = new List<float>();
         List<float> temperatuurls = new List<float>();
@@ -24,12 +24,20 @@ namespace Project_Greenhouse
         List<float> grondvochtigheidp2ls = new List<float>();
 
 
+        //Plant Variabele
+        private string plantnaam;
+        private float benodigdwaterdagml;
+        private string plantsoort;
+
+
+        //Connectionstring database
         const string connectionString =
         @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=../../Database1.mdf;Integrated Security=True";
 
 
         public DatabaseIO(float Temperatuur, float Luchtvochtigheid, float Grondvochtigheidp1, float Grondvochtigheidp2, DateTime DatumTijd, float Lichtintensietijd)
         {
+            //Set globale variabele naar een lokale
             temperatuur = Temperatuur;
             luchtvochtigheid = Luchtvochtigheid;
             grondvochtigheidp1 = Grondvochtigheidp1;
@@ -38,8 +46,17 @@ namespace Project_Greenhouse
             lichtintensietijd = Lichtintensietijd;
         }
 
+        public DatabaseIO(string Naam, float Benodigdwaterdagml, string Plantsoort)
+        {
+            //Set globale variabele naar een lokale
+            plantnaam = Naam;
+            benodigdwaterdagml = Benodigdwaterdagml;
+            plantsoort = Plantsoort;
+        }
+
         private void Opslaan()
         {
+            //Gegeven data vanuit eerste constructor op slaan in tabel "Meetgegevens"
             try{
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
@@ -47,11 +64,11 @@ namespace Project_Greenhouse
                     string query = "insert into Meetgegevens ([Lichtintensietijd],[Temperatuur],[Luchtvochtigheid],[Grondvochtigheidp1],[Grondvochtigheidp2]) values (@lichtintensietijd,@temperatuur,@luchtvochtigheid,@grondvochtigheidp1,@grondvochtigheidp2)";
                     using (SqlCommand cmd = new SqlCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("@Lichtintensietijd", lichtintensietijd);
-                        cmd.Parameters.AddWithValue("@Temperatuur", temperatuur);
-                        cmd.Parameters.AddWithValue("@Luchtvochtigheid", luchtvochtigheid);
-                        cmd.Parameters.AddWithValue("@Grondvochtigheidp1", grondvochtigheidp1);
-                        cmd.Parameters.AddWithValue("@Grondvochtigheidp2", grondvochtigheidp2);
+                        cmd.Parameters.AddWithValue("@lichtintensietijd", lichtintensietijd);
+                        cmd.Parameters.AddWithValue("@temperatuur", temperatuur);
+                        cmd.Parameters.AddWithValue("@luchtvochtigheid", luchtvochtigheid);
+                        cmd.Parameters.AddWithValue("@grondvochtigheidp1", grondvochtigheidp1);
+                        cmd.Parameters.AddWithValue("@grondvochtigheidp2", grondvochtigheidp2);
                         cmd.ExecuteNonQuery();
 
                         Console.WriteLine("Data added to database");
@@ -63,14 +80,15 @@ namespace Project_Greenhouse
                     Console.WriteLine("Error: " + ex);
             }
         }
-        private void Leesgegevens()
+        private void Leesgegevens(DateTime _DateTime)
         {
             try
             {
                 using (SqlConnection conn = new SqlConnection(connectionString))
                 {
                     conn.Open();
-                    string query = "select * from [Meetgegevens] where DateTime = " + DateTime.Today.ToLongDateString() + "order by Datetime ";
+                    //Select alle data met huidige datum
+                    string query = "select * from [Meetgegevens] where DateTime = " + _DateTime + " order by Datetime ";
                     SqlCommand cmd = new SqlCommand(query, conn);
 
                     using (SqlDataReader reader = cmd.ExecuteReader())
