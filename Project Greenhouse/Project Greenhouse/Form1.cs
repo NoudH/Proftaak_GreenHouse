@@ -113,11 +113,11 @@ namespace Project_Greenhouse
         #region Planten
         private void BtnAddPlant_Click(object sender, EventArgs e)
         {
-            if (TvPlanten.Nodes.Find(TxtPlantnaam.Text, true) == null)
+            if (TvPlanten.Nodes.Find(TxtPlantnaam.Text, true).Count() == 0)
             {
                 Plant p = new Plant(TxtPlantnaam.Text, (int)NudWater.Value, CbPlantsoort.Text);
                 plantenLijst.Add(p);
-                TvPlanten.Nodes.Find(p.Soort, false).First().Nodes.Add(p.ToString());
+                TvPlanten.Nodes.Find(p.Soort, false).First().Nodes.Add(p.ToString(), p.ToString());
 
                 File.AppendAllLines("PlantFile.txt", new string[] { String.Format("{0}\n{1}\n{2}\n", TxtPlantnaam.Text, ((int)NudWater.Value).ToString(), CbPlantsoort.Text) });
                 log.WriteLog(String.Format("Added plant with properties: Naam:{0}, Grondvochtigheid:{1}, Soort:{2}", p.Naam, p.Water, p.Soort));
@@ -181,7 +181,7 @@ namespace Project_Greenhouse
         #region Plantsoort
         private void BtnAddPlantsoort_Click(object sender, EventArgs e)
         {
-            if (TvPlanten.Nodes.Find(TxtPlantsoortNaam.Text, false) == null)
+            if (TvPlanten.Nodes.Find(TxtPlantsoortNaam.Text, false).Count() == 0)
             {
                 PlantSoort p = new PlantSoort(TxtPlantsoortNaam.Text);
                 soortenLijst.Add(p);
