@@ -217,22 +217,27 @@ namespace Project_Greenhouse
             if (message.StartsWith("temp:"))
             {
                 int value = getParamValue(message);
-
+                File.AppendAllText("Data.txt", value.ToString() +"\n");
             }
             else if (message.StartsWith("licht:"))
             {
                 int value = getParamValue(message);
-
+                File.AppendAllText("Data.txt", value.ToString() + "\n");
             }
             else if (message.StartsWith("plant1:"))
             {
                 int value = getParamValue(message);
-
+                File.AppendAllText("Data.txt", value.ToString() + "\n");
             }
             else if (message.StartsWith("plant2:"))
             {
                 int value = getParamValue(message);
-
+                File.AppendAllText("Data.txt", value.ToString() + "\n");
+            }
+            else if (message.StartsWith("date:"))
+            {
+                DateTime date = DateTime.Parse(message.Substring(message.IndexOf(":") + 1, message.Length - (message.IndexOf(":") + 1)));
+                File.AppendAllText("Data.txt", date.ToString() + "\n\n");
             }
         }
 
@@ -258,12 +263,14 @@ namespace Project_Greenhouse
             {
                 serialMessenger.Connect();
                 BtnSendPlant.Enabled = true;
+                BtnDataArduino.Enabled = true;
                 BtnConnect.Text = "Disconnect Arduino";
             }
             else
             {
                 serialMessenger.Disconnect();
                 BtnSendPlant.Enabled = false;
+                BtnDataArduino.Enabled = false;
                 BtnConnect.Text = "Connect to Arduino";
             }
 
@@ -272,6 +279,11 @@ namespace Project_Greenhouse
         private void BtnSendPlant_Click(object sender, EventArgs e)
         {
             serialMessenger.SendMessage("groep" + CbPlantNummer.Text + ":" + (int)NudWater.Value);
+        }
+
+        private void BtnDataArduino_Click(object sender, EventArgs e)
+        {
+            serialMessenger.SendMessage("Go");
         }
         #endregion
 
@@ -329,7 +341,6 @@ namespace Project_Greenhouse
                 return p.Naam == _naam;
             });
         }
-        #endregion
-
+        #endregion        
     }
 }

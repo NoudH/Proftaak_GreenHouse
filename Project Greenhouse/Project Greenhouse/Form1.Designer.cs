@@ -29,18 +29,25 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea13 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend13 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series17 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend14 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series18 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea15 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend15 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series19 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series20 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.TabLogin = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.BtnAddPlantsoort = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.TxtPlantsoortNaam = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.CbPlantNummer = new System.Windows.Forms.ComboBox();
+            this.BtnConnect = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.CbPlantsoort = new System.Windows.Forms.ComboBox();
             this.TvPlanten = new System.Windows.Forms.TreeView();
@@ -52,6 +59,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.TxtPlantnaam = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.TabGraphs = new System.Windows.Forms.TabPage();
             this.BtnOpenFile = new System.Windows.Forms.Button();
             this.DtpGraphs = new System.Windows.Forms.DateTimePicker();
@@ -64,16 +72,10 @@
             this.TxtLogging = new System.Windows.Forms.RichTextBox();
             this.OfdDatafile = new System.Windows.Forms.OpenFileDialog();
             this.readMessageTimer = new System.Windows.Forms.Timer(this.components);
-            this.BtnConnect = new System.Windows.Forms.Button();
-            this.CbPlantNummer = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.TxtPlantsoortNaam = new System.Windows.Forms.TextBox();
-            this.BtnAddPlantsoort = new System.Windows.Forms.Button();
+            this.BtnDataArduino = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.TabLogin.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudWater)).BeginInit();
             this.TabGraphs.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChartHumidity)).BeginInit();
@@ -81,7 +83,6 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ChartMoisture)).BeginInit();
             this.tabLogs.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -98,6 +99,7 @@
             // 
             // TabLogin
             // 
+            this.TabLogin.Controls.Add(this.BtnDataArduino);
             this.TabLogin.Controls.Add(this.groupBox3);
             this.TabLogin.Controls.Add(this.label5);
             this.TabLogin.Controls.Add(this.CbPlantNummer);
@@ -120,6 +122,75 @@
             this.TabLogin.TabIndex = 2;
             this.TabLogin.Text = "Planten";
             this.TabLogin.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.BtnAddPlantsoort);
+            this.groupBox3.Controls.Add(this.label6);
+            this.groupBox3.Controls.Add(this.TxtPlantsoortNaam);
+            this.groupBox3.Location = new System.Drawing.Point(161, 4);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(153, 182);
+            this.groupBox3.TabIndex = 16;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Plantsoort";
+            // 
+            // BtnAddPlantsoort
+            // 
+            this.BtnAddPlantsoort.Location = new System.Drawing.Point(6, 142);
+            this.BtnAddPlantsoort.Name = "BtnAddPlantsoort";
+            this.BtnAddPlantsoort.Size = new System.Drawing.Size(139, 23);
+            this.BtnAddPlantsoort.TabIndex = 17;
+            this.BtnAddPlantsoort.Text = "Voeg plantsoort toe.";
+            this.BtnAddPlantsoort.UseVisualStyleBackColor = true;
+            this.BtnAddPlantsoort.Click += new System.EventHandler(this.BtnAddPlantsoort_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 18);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(38, 13);
+            this.label6.TabIndex = 18;
+            this.label6.Text = "Naam:";
+            // 
+            // TxtPlantsoortNaam
+            // 
+            this.TxtPlantsoortNaam.Location = new System.Drawing.Point(6, 37);
+            this.TxtPlantsoortNaam.Name = "TxtPlantsoortNaam";
+            this.TxtPlantsoortNaam.Size = new System.Drawing.Size(139, 20);
+            this.TxtPlantsoortNaam.TabIndex = 17;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(8, 337);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(74, 13);
+            this.label5.TabIndex = 14;
+            this.label5.Text = "Plant nummer:";
+            // 
+            // CbPlantNummer
+            // 
+            this.CbPlantNummer.FormattingEnabled = true;
+            this.CbPlantNummer.Items.AddRange(new object[] {
+            "1",
+            "2"});
+            this.CbPlantNummer.Location = new System.Drawing.Point(9, 350);
+            this.CbPlantNummer.Name = "CbPlantNummer";
+            this.CbPlantNummer.Size = new System.Drawing.Size(138, 21);
+            this.CbPlantNummer.TabIndex = 13;
+            this.CbPlantNummer.Text = "1";
+            // 
+            // BtnConnect
+            // 
+            this.BtnConnect.Location = new System.Drawing.Point(9, 377);
+            this.BtnConnect.Name = "BtnConnect";
+            this.BtnConnect.Size = new System.Drawing.Size(139, 23);
+            this.BtnConnect.TabIndex = 12;
+            this.BtnConnect.Text = "Connect to Arduino";
+            this.BtnConnect.UseVisualStyleBackColor = true;
+            this.BtnConnect.Click += new System.EventHandler(this.BtnConnect_Click);
             // 
             // label4
             // 
@@ -152,7 +223,7 @@
             // BtnSendPlant
             // 
             this.BtnSendPlant.Enabled = false;
-            this.BtnSendPlant.Location = new System.Drawing.Point(8, 435);
+            this.BtnSendPlant.Location = new System.Drawing.Point(9, 406);
             this.BtnSendPlant.Name = "BtnSendPlant";
             this.BtnSendPlant.Size = new System.Drawing.Size(139, 23);
             this.BtnSendPlant.TabIndex = 8;
@@ -221,6 +292,15 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "Planten";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Location = new System.Drawing.Point(3, 3);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(151, 183);
+            this.groupBox2.TabIndex = 15;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Planten";
+            // 
             // TabGraphs
             // 
             this.TabGraphs.Controls.Add(this.BtnOpenFile);
@@ -257,61 +337,61 @@
             // 
             // ChartHumidity
             // 
-            chartArea13.Name = "ChartArea1";
-            chartArea13.Position.Auto = false;
-            chartArea13.Position.Height = 90F;
-            chartArea13.Position.Width = 94F;
-            chartArea13.Position.X = 3F;
-            chartArea13.Position.Y = 10F;
-            this.ChartHumidity.ChartAreas.Add(chartArea13);
-            legend13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            legend13.IsTextAutoFit = false;
-            legend13.Name = "Legend1";
-            legend13.Position.Auto = false;
-            legend13.Position.Height = 9F;
-            legend13.Position.Width = 39.48368F;
-            legend13.Position.X = 60F;
-            legend13.Position.Y = 4F;
-            this.ChartHumidity.Legends.Add(legend13);
+            chartArea1.Name = "ChartArea1";
+            chartArea1.Position.Auto = false;
+            chartArea1.Position.Height = 90F;
+            chartArea1.Position.Width = 94F;
+            chartArea1.Position.X = 3F;
+            chartArea1.Position.Y = 10F;
+            this.ChartHumidity.ChartAreas.Add(chartArea1);
+            legend1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            legend1.IsTextAutoFit = false;
+            legend1.Name = "Legend1";
+            legend1.Position.Auto = false;
+            legend1.Position.Height = 9F;
+            legend1.Position.Width = 39.48368F;
+            legend1.Position.X = 60F;
+            legend1.Position.Y = 4F;
+            this.ChartHumidity.Legends.Add(legend1);
             this.ChartHumidity.Location = new System.Drawing.Point(406, 32);
             this.ChartHumidity.Name = "ChartHumidity";
-            series17.BorderWidth = 3;
-            series17.ChartArea = "ChartArea1";
-            series17.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series17.Legend = "Legend1";
-            series17.Name = "Licht intensiteit";
-            this.ChartHumidity.Series.Add(series17);
+            series1.BorderWidth = 3;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Legend = "Legend1";
+            series1.Name = "Licht intensiteit";
+            this.ChartHumidity.Series.Add(series1);
             this.ChartHumidity.Size = new System.Drawing.Size(393, 201);
             this.ChartHumidity.TabIndex = 3;
             this.ChartHumidity.Text = "chart2";
             // 
             // ChartTemp
             // 
-            chartArea14.Name = "ChartArea1";
-            chartArea14.Position.Auto = false;
-            chartArea14.Position.Height = 90F;
-            chartArea14.Position.Width = 94F;
-            chartArea14.Position.X = 3F;
-            chartArea14.Position.Y = 10F;
-            this.ChartTemp.ChartAreas.Add(chartArea14);
-            legend14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            legend14.IsTextAutoFit = false;
-            legend14.Name = "Legend1";
-            legend14.Position.Auto = false;
-            legend14.Position.Height = 9F;
-            legend14.Position.Width = 45.07463F;
-            legend14.Position.X = 54.92537F;
-            legend14.Position.Y = 4F;
-            this.ChartTemp.Legends.Add(legend14);
+            chartArea2.Name = "ChartArea1";
+            chartArea2.Position.Auto = false;
+            chartArea2.Position.Height = 90F;
+            chartArea2.Position.Width = 94F;
+            chartArea2.Position.X = 3F;
+            chartArea2.Position.Y = 10F;
+            this.ChartTemp.ChartAreas.Add(chartArea2);
+            legend2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            legend2.IsTextAutoFit = false;
+            legend2.Name = "Legend1";
+            legend2.Position.Auto = false;
+            legend2.Position.Height = 9F;
+            legend2.Position.Width = 45.07463F;
+            legend2.Position.X = 54.92537F;
+            legend2.Position.Y = 4F;
+            this.ChartTemp.Legends.Add(legend2);
             this.ChartTemp.Location = new System.Drawing.Point(8, 32);
             this.ChartTemp.Name = "ChartTemp";
             this.ChartTemp.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series18.BorderWidth = 3;
-            series18.ChartArea = "ChartArea1";
-            series18.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series18.Legend = "Legend1";
-            series18.Name = "Temperatuur in °C";
-            this.ChartTemp.Series.Add(series18);
+            series2.BorderWidth = 3;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Legend = "Legend1";
+            series2.Name = "Temperatuur in °C";
+            this.ChartTemp.Series.Add(series2);
             this.ChartTemp.Size = new System.Drawing.Size(403, 201);
             this.ChartTemp.TabIndex = 2;
             this.ChartTemp.Text = "chart3";
@@ -328,31 +408,31 @@
             // 
             // ChartMoisture
             // 
-            chartArea15.Name = "ChartArea1";
-            chartArea15.Position.Auto = false;
-            chartArea15.Position.Height = 94F;
-            chartArea15.Position.Width = 81.21519F;
-            chartArea15.Position.Y = 3F;
-            this.ChartMoisture.ChartAreas.Add(chartArea15);
-            legend15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            legend15.IsTextAutoFit = false;
-            legend15.Name = "Legend1";
-            this.ChartMoisture.Legends.Add(legend15);
+            chartArea3.Name = "ChartArea1";
+            chartArea3.Position.Auto = false;
+            chartArea3.Position.Height = 94F;
+            chartArea3.Position.Width = 81.21519F;
+            chartArea3.Position.Y = 3F;
+            this.ChartMoisture.ChartAreas.Add(chartArea3);
+            legend3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            legend3.IsTextAutoFit = false;
+            legend3.Name = "Legend1";
+            this.ChartMoisture.Legends.Add(legend3);
             this.ChartMoisture.Location = new System.Drawing.Point(6, 15);
             this.ChartMoisture.Name = "ChartMoisture";
             this.ChartMoisture.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series19.BorderWidth = 3;
-            series19.ChartArea = "ChartArea1";
-            series19.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series19.Legend = "Legend1";
-            series19.Name = "Plant 1";
-            series20.BorderWidth = 3;
-            series20.ChartArea = "ChartArea1";
-            series20.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series20.Legend = "Legend1";
-            series20.Name = "Plant 2";
-            this.ChartMoisture.Series.Add(series19);
-            this.ChartMoisture.Series.Add(series20);
+            series3.BorderWidth = 3;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series3.Legend = "Legend1";
+            series3.Name = "Plant 1";
+            series4.BorderWidth = 3;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Legend = "Legend1";
+            series4.Name = "Plant 2";
+            this.ChartMoisture.Series.Add(series3);
+            this.ChartMoisture.Series.Add(series4);
             this.ChartMoisture.Size = new System.Drawing.Size(784, 197);
             this.ChartMoisture.TabIndex = 0;
             this.ChartMoisture.Text = "chart1";
@@ -391,83 +471,16 @@
             this.readMessageTimer.Interval = 10;
             this.readMessageTimer.Tick += new System.EventHandler(this.readMessageTimer_Tick);
             // 
-            // BtnConnect
+            // BtnDataArduino
             // 
-            this.BtnConnect.Location = new System.Drawing.Point(8, 406);
-            this.BtnConnect.Name = "BtnConnect";
-            this.BtnConnect.Size = new System.Drawing.Size(139, 23);
-            this.BtnConnect.TabIndex = 12;
-            this.BtnConnect.Text = "Connect to Arduino";
-            this.BtnConnect.UseVisualStyleBackColor = true;
-            this.BtnConnect.Click += new System.EventHandler(this.BtnConnect_Click);
-            // 
-            // CbPlantNummer
-            // 
-            this.CbPlantNummer.FormattingEnabled = true;
-            this.CbPlantNummer.Items.AddRange(new object[] {
-            "1",
-            "2"});
-            this.CbPlantNummer.Location = new System.Drawing.Point(8, 379);
-            this.CbPlantNummer.Name = "CbPlantNummer";
-            this.CbPlantNummer.Size = new System.Drawing.Size(138, 21);
-            this.CbPlantNummer.TabIndex = 13;
-            this.CbPlantNummer.Text = "1";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(8, 360);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(74, 13);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "Plant nummer:";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Location = new System.Drawing.Point(3, 3);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(151, 183);
-            this.groupBox2.TabIndex = 15;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Planten";
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.BtnAddPlantsoort);
-            this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.TxtPlantsoortNaam);
-            this.groupBox3.Location = new System.Drawing.Point(161, 4);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(153, 182);
-            this.groupBox3.TabIndex = 16;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Plantsoort";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 18);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(38, 13);
-            this.label6.TabIndex = 18;
-            this.label6.Text = "Naam:";
-            // 
-            // TxtPlantsoortNaam
-            // 
-            this.TxtPlantsoortNaam.Location = new System.Drawing.Point(6, 37);
-            this.TxtPlantsoortNaam.Name = "TxtPlantsoortNaam";
-            this.TxtPlantsoortNaam.Size = new System.Drawing.Size(139, 20);
-            this.TxtPlantsoortNaam.TabIndex = 17;
-            // 
-            // BtnAddPlantsoort
-            // 
-            this.BtnAddPlantsoort.Location = new System.Drawing.Point(6, 142);
-            this.BtnAddPlantsoort.Name = "BtnAddPlantsoort";
-            this.BtnAddPlantsoort.Size = new System.Drawing.Size(139, 23);
-            this.BtnAddPlantsoort.TabIndex = 17;
-            this.BtnAddPlantsoort.Text = "Voeg plantsoort toe.";
-            this.BtnAddPlantsoort.UseVisualStyleBackColor = true;
-            this.BtnAddPlantsoort.Click += new System.EventHandler(this.BtnAddPlantsoort_Click);
+            this.BtnDataArduino.Enabled = false;
+            this.BtnDataArduino.Location = new System.Drawing.Point(9, 435);
+            this.BtnDataArduino.Name = "BtnDataArduino";
+            this.BtnDataArduino.Size = new System.Drawing.Size(139, 23);
+            this.BtnDataArduino.TabIndex = 17;
+            this.BtnDataArduino.Text = "Lees data van arduino";
+            this.BtnDataArduino.UseVisualStyleBackColor = true;
+            this.BtnDataArduino.Click += new System.EventHandler(this.BtnDataArduino_Click);
             // 
             // Form1
             // 
@@ -481,6 +494,8 @@
             this.tabControl1.ResumeLayout(false);
             this.TabLogin.ResumeLayout(false);
             this.TabLogin.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudWater)).EndInit();
             this.TabGraphs.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ChartHumidity)).EndInit();
@@ -488,8 +503,6 @@
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.ChartMoisture)).EndInit();
             this.tabLogs.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -529,6 +542,7 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox TxtPlantsoortNaam;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button BtnDataArduino;
     }
 }
 
