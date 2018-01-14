@@ -31,30 +31,8 @@ namespace Project_Greenhouse
         public Form1()
         {
             InitializeComponent();
-            //gebruik altijd amerikaanse notatie voor datums
+            //gebruik altijd amerikaanse notatie voor datums (want database gebruikt deze voor datums)
             Application.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
-
-
-            meeting.RandomMeeting(1000);
-            meeting.ImporteerMeetingenDB();
-            foreach (Meeting m in meeting.meetingLijst)
-            {
-                listBox1.Items.Add(m.ToString());
-            }
-        }
-
-        private void btnScanFiles_Click(object sender, EventArgs e)
-        {
-            List<string> tekstBestandenLijst = new List<string>();
-
-            string tekstBestandenPath = "@D:\\School\\Proftaak_GreenHouse\\Project Greenhouse\\TextFilesArduino";
-            DirectoryInfo path = new DirectoryInfo(tekstBestandenPath);
-
-
-            foreach (var file in path.GetFiles("*.txt"))
-            {
-                tekstBestandenLijst.Add(file.Name);
-            }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -71,13 +49,20 @@ namespace Project_Greenhouse
         //chart datums veranderd
         private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
         {
-            dateTimePicker1.MinDate = meeting.GetOudsteMeeting().Datum();
-            dateTimePicker1.MaxDate = dateTimePicker2.Value;
+            //veroorzaakt anders problemen bij een lege DB
+            try
+            {
+                dateTimePicker1.MinDate = meeting.GetOudsteMeeting().Datum();
+                dateTimePicker1.MaxDate = dateTimePicker2.Value;
 
-            dateTimePicker2.MinDate = dateTimePicker1.Value;
-            dateTimePicker2.MaxDate = meeting.GetNieuwsteMeeting().Datum();
+                dateTimePicker2.MinDate = dateTimePicker1.Value;
+                dateTimePicker2.MaxDate = meeting.GetNieuwsteMeeting().Datum();
 
-            UpdateChart();
+                UpdateChart();
+            }
+            catch
+            {
+            }
         }
 
         public void UpdateChart()
@@ -98,6 +83,125 @@ namespace Project_Greenhouse
                         chartMeetingen.Series[0].Points.AddXY(m.Datum(), m.Lichtintensiteit());
                     }
                 }
+            }
+        }
+
+//-----Genereer Meetingen-----//
+    //-----datums-----//
+        private void dtpGenereerVan_ValueChanged(object sender, EventArgs e)
+        {
+            //tel het aantal datums tussen dtpVan en dtpTot en update de tekstbox
+            //wordt afgerond naar int
+            int aantalDagen = (int)((dtpGenereerTot.Value - dtpGenereerVan.Value).TotalDays + 1);
+            tbGeneerDatums.Text = aantalDagen.ToString();
+
+            //zet de minimum en maximum waarden van de datetimepickers
+            dtpGenereerVan.MaxDate = dtpGenereerTot.Value;
+            dtpGenereerTot.MinDate = dtpGenereerVan.Value;
+        }
+
+        private void tbGeneerDatums_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                try
+                {
+                    dtpGenereerTot.Value = dtpGenereerVan.Value.AddDays(Convert.ToInt32(tbGeneerDatums.Text) - 1);
+                }
+                catch (Exception)
+                {
+                }
+            }
+        }
+    //-----interval------//
+        private void cbTijdsEenheid_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateMeetingenPerDag();
+        }
+
+        private void tbInterval_TextChanged(object sender, EventArgs e)
+        {
+            UpdateMeetingenPerDag();
+        }
+
+        private void UpdateMeetingenPerDag()
+        {
+            //een onjuiste input bij Interval kan het niet laten werken, vandaar try
+            try
+            {
+                switch (cbTijdsEenheid.SelectedIndex)
+                {
+                    //seconden
+                    case 0:
+                        //aantal seconden in dag*interval
+                        tbMeetingenPerDag.Text = (60 * 60 * 24 * Convert.ToDouble(tbInterval.Text)).ToString();
+                        break;
+                    //minuut
+                    case 1:
+                        //aantal minuten in dag*interval
+                        tbMeetingenPerDag.Text = (60 * 24 * Convert.ToDouble(tbInterval.Text)).ToString();
+                        break;
+                    //uur
+                    case 2:
+                        //aantal uur in dag*interval
+                        tbMeetingenPerDag.Text = (24 * Convert.ToDouble(tbInterval.Text)).ToString();
+                        break;
+                    //dag
+                    case 3:
+                        //is hier gelijk
+                        tbMeetingenPerDag.Text = (Convert.ToDouble(tbInterval.Text)).ToString();
+                        break;
+                    //week
+                    case 4:
+                        //interval / dagen in een week
+                        tbMeetingenPerDag.Text = (Convert.ToDouble(tbInterval.Text) / 7).ToString();
+                        break;
+                    //maand
+                    case 5:
+                        //interval / dagen in maand
+                        tbMeetingenPerDag.Text = (Convert.ToDouble(tbInterval.Text) / (365 / 12)).ToString();
+                        break;
+                    //jaar
+                    case 6:
+                        //interval / dagen in jaar
+                        tbMeetingenPerDag.Text = (Convert.ToDouble(tbInterval.Text) / 365).ToString();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+    //-----genereer-----//
+        //bereken totaal aantal meetingen
+        private void tbMeetingenPerDag_TextChanged(object sender, EventArgs e)
+        {
+            //ja dit is niet het meest nauwkeurig
+            tbGenereerTotaalAantalMeetingen.Text = Convert.ToInt32((Convert.ToDouble(tbGeneerDatums.Text) * Convert.ToDouble(tbMeetingenPerDag.Text))).ToString();
+        }
+
+        private void btnGenereerMeetingen_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //database moet eerst geleegd worden
+                if (cbVervangDB.Checked == true)
+                {
+                    meeting.LeegDB();
+                }
+                int interval = Convert.ToInt32(tbInterval.Text);
+
+                //genereer de random data
+                meeting.GenereerRandomMeetingen(dtpGenereerVan.Value, dtpGenereerTot.Value, interval, cbTijdsEenheid.SelectedIndex, Convert.ToInt32(nudMinLichtintensiteit.Value), Convert.ToInt32(nudMaxLichtintensiteit.Value), Convert.ToInt32(nudADLichtintensiteit.Value), Convert.ToInt32(nudMinTemperatuur.Value), Convert.ToInt32(nudMaxTemperatuur.Value), Convert.ToInt32(nudADTemperatuur.Value), Convert.ToInt32(nudMinLuchtvochtigheid.Value), Convert.ToInt32(nudMaxLuchtvochtigheid.Value), Convert.ToInt32(nudADLuchtvochtigheid.Value), Convert.ToInt32(nudMinGrondvochtigheid.Value), Convert.ToInt32(nudMaxGrondvochtigheid.Value), Convert.ToInt32(nudADGrondvochtigheid.Value));
+
+                MessageBox.Show(meeting.meetingLijst.Count() + " Meetingen toegevoegd!");
+            }
+            catch (Exception exeption)
+            {
+                MessageBox.Show(exeption.Message);
             }
         }
     }
