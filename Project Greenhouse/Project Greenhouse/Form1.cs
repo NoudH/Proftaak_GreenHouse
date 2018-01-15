@@ -13,35 +13,25 @@ namespace Project_Greenhouse
 {
     public partial class Form1 : Form
     {
+        #region Variabelen
         private SerialMessenger serialMessenger;
+        private Logging log;
         List<Plant> plantenLijst = new List<Plant>();
+        List<PlantSoort> soortenLijst = new List<PlantSoort>();
+        #endregion
 
+        #region Form Related        
         public Form1()
         {
             InitializeComponent();
-            ReadPlantFile();
-            
 
             MessageBuilder messageBuilder = new MessageBuilder('#', '%');
+
             serialMessenger = new SerialMessenger("COM4", 115200, messageBuilder);
+            log = new Logging(TxtLogging);
 
-            //TODO: Zet dit in een button
-            //serialMessenger.Connect();            
-        }        
-
-        void ReadPlantFile()
-        {
-            if (File.Exists("PlantFile.txt"))
-            {
-                string[] data = File.ReadAllLines("PlantFile.txt");
-                for (int i = 0; i < data.Length; i+=3)
-                {
-                    Plant p = new Plant(data[i], int.Parse(data[i + 1]));
-                    plantenLijst.Add(p);
-                    LbPlanten.Items.Add(p.Naam);
-                }
-            }
-            
+            PopulateTreeView();
+            ReadPlantFile();                        
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -50,68 +40,281 @@ namespace Project_Greenhouse
             {
                 serialMessenger.Disconnect();
             }
-            catch 
+            catch
             {
 
-            }            
+            }
         }
-
-        private void WriteLog(string _message)
+        #endregion
+        
+        #region Treeview + Filereading
+        void PopulateTreeView()
         {
-            TxtLogging.Text += String.Format("[{0}] {1}\n", DateTime.Now.ToString(), _message);
+            log.WriteLog("Populating treeview:");
+
+            TvPlanten.Nodes.Add("Undefined", "Undefined");
+
+            if (File.Exists("Plantsoorten.txt"))
+            {
+                try
+                {
+                    string[] data = File.ReadAllLines("Plantsoorten.txt");
+                    for (int i = 0; i < data.Length; i++)
+                    {
+                        PlantSoort p = new PlantSoort(data[i]);
+                        soortenLijst.Add(p);
+                        TvPlanten.Nodes.Add(p.ToString(),p.ToString());
+                        CbPlantsoort.Items.Add(p.ToString());
+                        log.WriteLog("Added " + data[i] + " as a \"Plantsoort\"");
+                    }
+                }
+                catch
+                {
+
+                }
+            }
         }
 
+        void ReadPlantFile()
+        {
+            /*if (File.Exists("PlantFile.txt"))
+            {
+                try
+                {                    
+                    string[] data = File.ReadAllLines("PlantFile.txt");
+                    for (int i = 0; i < data.Length; i += 4)
+                    {
+                        Plant p = new Plant(data[i], int.Parse(data[i + 1]), data[i + 2]);
+                        plantenLijst.Add(p);
+                        //TvPlanten.Nodes.Add(p.ToString());
+                        
+                        log.WriteLog(String.Format("Added {0} of type {1}.", p.ToString(), p.Soort));
+                    }
+                }
+                catch
+                {
+                    
+                }
+            }*/
+            DatabaseIO database = new DatabaseIO();
+            database.ReadPlant();
+            for (int i = 0; i < database.plantnaamls.Count(); i++)
+            {
+                Plant p = new Plant(database.plantnaamls[i], (int)database.benodigdwaterdagmlls[i], database.plantsoortls[i]);
+                plantenLijst.Add(p);
+                TvPlanten.Nodes.Find(p.Soort, false).First().Nodes.Add(p.ToString());
+                log.WriteLog(String.Format("Added {0} of type {1}.", p.ToString(), p.Soort));
+            }
+
+        }
+
+        private void TvPlanten_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            if (TvPlanten.SelectedNode.Parent != null)
+            {
+                TxtPlantnaam.Text = FindPlant(TvPlanten.SelectedNode.Text).Naam;
+                NudWater.Value = FindPlant(TvPlanten.SelectedNode.Text).Water;
+                CbPlantsoort.Text = FindPlant(TvPlanten.SelectedNode.Text).Soort;
+            }
+        }
+        #endregion
+
+        #region Planten
         private void BtnAddPlant_Click(object sender, EventArgs e)
         {
-            Plant p = new Plant(TxtPlantnaam.Text, (int)NudWater.Value);
-            plantenLijst.Add(p);
-            LbPlanten.Items.Add(p.Naam);
-
-            File.AppendAllLines("PlantFile.txt", new string[] { String.Format("{0}\n{1}\n", TxtPlantnaam.Text, (int)NudWater.Value) });
-        }
-
-        private void LbPlanten_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
+            if (TvPlanten.Nodes.Find(TxtPlantnaam.Text, true).Count() == 0)
             {
-                TxtPlantnaam.Text = FindPlant(LbPlanten.SelectedItem.ToString()).Naam;
-                NudWater.Value = FindPlant(LbPlanten.SelectedItem.ToString()).Water;
+                Plant p = new Plant(TxtPlantnaam.Text, (int)NudWater.Value, CbPlantsoort.Text);
+                plantenLijst.Add(p);
+                TvPlanten.Nodes.Find(p.Soort, false).First().Nodes.Add(p.ToString(), p.ToString());
+
+                //File.AppendAllLines("PlantFile.txt", new string[] { String.Format("{0}\n{1}\n{2}\n", TxtPlantnaam.Text, ((int)NudWater.Value).ToString(), CbPlantsoort.Text) });
+                DatabaseIO database = new DatabaseIO(TxtPlantnaam.Text, (float)NudWater.Value, CbPlantsoort.Text);
+                database.OpslaanPlant();
+                log.WriteLog(String.Format("Added plant with properties: Naam:{0}, Grondvochtigheid:{1}, Soort:{2}", p.Naam, p.Water, p.Soort));
             }
-            catch 
+            else
             {
-
-            }            
-        }
-
-        private Plant FindPlant(string _naam)
-        {
-            return plantenLijst.Find(delegate (Plant p)
-            {
-                return p.Naam == _naam;
-            });
-        }
-
-        private void BtnSendPlant_Click(object sender, EventArgs e)
-        {
-            serialMessenger.Connect();
-            serialMessenger.SendMessage(FindPlant(LbPlanten.SelectedItem.ToString()).Water.ToString());
+                log.WriteLog("User tried to make a duplicate item.");
+                MessageBox.Show("Je kunt geen twee items met dezelfde naam aanmaken.", "Error!");
+            }
         }
 
         private void BtnRemovePlant_Click(object sender, EventArgs e)
         {
-            List<string> FileContent = new List<string>();
-            FileContent = File.ReadAllLines("PlantFile.txt").ToList();
-            int index = FileContent.IndexOf(LbPlanten.SelectedItem.ToString());
+            if (TvPlanten.SelectedNode.Nodes.Count < 1)
+            {
+                List<string> FileContent = new List<string>();
 
-            FileContent.RemoveRange(index, 3);
+                if (TvPlanten.SelectedNode.Parent == null)
+                {
+                    FileContent = File.ReadAllLines("Plantsoorten.txt").ToList();
+                    int index = FileContent.FindIndex(delegate (string g)
+                    {
+                        return g == TvPlanten.SelectedNode.Text;
+                    });
 
-            File.WriteAllLines("PlantFile.txt", FileContent);
-            plantenLijst.Remove(FindPlant(LbPlanten.SelectedItem.ToString()));
-            LbPlanten.Items.RemoveAt(LbPlanten.SelectedIndex);
+                    FileContent.RemoveRange(index, 1);
+                    File.WriteAllLines("Plantsoorten.txt", FileContent);
+
+                    log.WriteLog("Removed Plantsoort " + FindPlantsoort(TvPlanten.SelectedNode.Text).ToString());
+
+                    CbPlantsoort.Items.RemoveAt(index + 1);
+                    soortenLijst.Remove(FindPlantsoort(TvPlanten.SelectedNode.Text));
+                    TvPlanten.Nodes.Remove(TvPlanten.SelectedNode);
+                }
+                else
+                {
+                    DatabaseIO database = new DatabaseIO();
+                    database.DeletePlant(TvPlanten.SelectedNode.Text);
+
+                    plantenLijst.Remove(FindPlant(TvPlanten.SelectedNode.Text));
+                    TvPlanten.Nodes.Remove(TvPlanten.SelectedNode);
+                }                
+            }
+            else
+            {
+                //prevent batman from existing
+                MessageBox.Show("You cannot delete an item that has children.\nRemove the children first.", "Error!");
+            }
+            
+        }
+        #endregion
+
+        #region Plantsoort
+        private void BtnAddPlantsoort_Click(object sender, EventArgs e)
+        {
+            if (TvPlanten.Nodes.Find(TxtPlantsoortNaam.Text, false).Count() == 0)
+            {
+                PlantSoort p = new PlantSoort(TxtPlantsoortNaam.Text);
+                soortenLijst.Add(p);
+                File.AppendAllText("Plantsoorten.txt", TxtPlantsoortNaam.Text + "\n");
+                CbPlantsoort.Items.Add(p.ToString());
+                TvPlanten.Nodes.Add(p.ToString(), p.ToString());
+                log.WriteLog("Added plantsoort with Naam: " + TxtPlantsoortNaam.Text);
+            }
+            else
+            {
+                log.WriteLog("User tried to make a duplicate item.");
+                MessageBox.Show("Je kunt geen twee items met dezelfde naam aanmaken.", "Error!");
+            }
+        }
+        #endregion
+
+        #region Serialmessaging
+        private void readMessageTimer_Tick(object sender, EventArgs e)
+        {
+            string[] messages = serialMessenger.ReadMessages();
+            if (messages != null)
+            {
+                foreach (string message in messages)
+                {
+                    processReceivedMessage(message);
+                }
+            }
+        }
+
+        private void processReceivedMessage(string message)
+        {
+            if (message.StartsWith("temp:"))
+            {
+                int value = getParamValue(message);
+                File.AppendAllText("Data.txt", value.ToString() +"\n");
+            }
+            else if (message.StartsWith("licht:"))
+            {
+                int value = getParamValue(message);
+                File.AppendAllText("Data.txt", value.ToString() + "\n");
+            }
+            else if (message.StartsWith("plant1:"))
+            {
+                int value = getParamValue(message);
+                File.AppendAllText("Data.txt", value.ToString() + "\n");
+            }
+            else if (message.StartsWith("plant2:"))
+            {
+                int value = getParamValue(message);
+                File.AppendAllText("Data.txt", value.ToString() + "\n");
+            }
+            else if (message.StartsWith("date:"))
+            {
+                try
+                {
+                    DateTime date = DateTime.Parse(message.Substring(message.IndexOf(":") + 1, message.Length - (message.IndexOf(":") + 1)));
+                    string[] data = File.ReadAllLines("Data.txt");
+                    File.AppendAllText("Data.txt", date.ToString() + "\n\n");
+
+                    DatabaseIO database = new DatabaseIO(float.Parse(data[data.Length - 4]), float.Parse(data[data.Length - 3]), float.Parse(data[data.Length - 2]), float.Parse(data[data.Length - 1]), date);
+                    database.Opslaan();                    
+                }
+                catch (Exception ex)
+                {
+                    log.WriteLog(ex.Message);
+                }
+            }
+        }
+
+        private int getParamValue(string message)
+        {
+            int colonIndex = message.IndexOf(':');
+            if (colonIndex != -1)
+            {
+                string param = message.Substring(colonIndex + 1);
+                int value;
+                bool done = int.TryParse(param, out value);
+                if (done)
+                {
+                    return value;
+                }
+            }
+            throw new ArgumentException("message contains no value parameter");
+        }
+
+        private void BtnConnect_Click(object sender, EventArgs e)
+        {
+            if (BtnConnect.Text == "Connect to Arduino")
+            {
+                serialMessenger.Connect();
+                BtnSendPlant.Enabled = true;
+                BtnDataArduino.Enabled = true;
+                BtnConnect.Text = "Disconnect Arduino";
+            }
+            else
+            {
+                serialMessenger.Disconnect();
+                BtnSendPlant.Enabled = false;
+                BtnDataArduino.Enabled = false;
+                BtnConnect.Text = "Connect to Arduino";
+            }
+
+        }
+
+        private void BtnSendPlant_Click(object sender, EventArgs e)
+        {
+            serialMessenger.SendMessage("groep" + CbPlantNummer.Text + ":" + (int)NudWater.Value);
+        }
+
+        private void BtnDataArduino_Click(object sender, EventArgs e)
+        {
+            serialMessenger.SendMessage("Go");
+        }
+        #endregion
+
+        #region Graphs
+        private void BtnOpenFile_Click(object sender, EventArgs e)
+        {
+            OfdDatafile.Filter = "Text file (*.txt) | *.txt";
+            OfdDatafile.ShowDialog();
+            log.WriteLog("File " + OfdDatafile.FileName + " selected");
         }
 
         private void DtpGraphs_ValueChanged(object sender, EventArgs e)
         {
+            ChartTemp.Series[0].Points.Clear();
+            ChartHumidity.Series[0].Points.Clear();
+            ChartMoisture.Series[0].Points.Clear();
+            ChartMoisture.Series[1].Points.Clear();
+
             if (OfdDatafile.FileName != "")
             {
                 string[] data = File.ReadAllLines(OfdDatafile.FileName);
@@ -125,17 +328,46 @@ namespace Project_Greenhouse
                         ChartMoisture.Series[1].Points.AddXY(DateTime.Parse(data[i + 4]).ToShortTimeString(), double.Parse(data[i + 3]));
                     }
                 }
+                log.WriteLog("Succesfully drawn charts with date: " + DtpGraphs.Value.ToString());
             }
             else
             {
                 MessageBox.Show("No file selected!", "Error!");
+                log.WriteLog("Failed to draw charts, no file was selected!");
             }
+
+            /*DatabaseIO database = new DatabaseIO();
+            database.Leesgegevens(DateTime.Parse(DtpGraphs.Value.ToShortDateString()));
+
+            for (int i = 0; i < database.datumtijdls.Count(); i++)
+            {
+
+                ChartTemp.Series[0].Points.AddXY(database.datumtijdls[i].ToShortTimeString(), (double)database.temperatuurls[i]);
+                ChartHumidity.Series[0].Points.AddXY(database.datumtijdls[i].ToShortTimeString(), (double)database.lichtintensietijdls[i]);
+                ChartMoisture.Series[0].Points.AddXY(database.datumtijdls[i].ToShortTimeString(), (double)database.grondvochtigheidp1ls[i]);
+                ChartMoisture.Series[1].Points.AddXY(database.datumtijdls[i].ToShortTimeString(), (double)database.grondvochtigheidp2ls[i]);
+
+            }
+            log.WriteLog("Succesfully drawn charts with date: " + DtpGraphs.Value.ToString());*/
+        }
+        #endregion        
+
+        #region Functies
+        private Plant FindPlant(string _naam)
+        {
+            return plantenLijst.Find(delegate (Plant p)
+            {
+                return p.Naam == _naam;
+            });
         }
 
-        private void BtnOpenFile_Click(object sender, EventArgs e)
+        private PlantSoort FindPlantsoort(string _naam)
         {
-            OfdDatafile.Filter = "Text file (*.txt) | *.txt";
-            OfdDatafile.ShowDialog();
+            return soortenLijst.Find(delegate (PlantSoort p)
+            {
+                return p.Naam == _naam;
+            });
         }
+        #endregion        
     }
 }
