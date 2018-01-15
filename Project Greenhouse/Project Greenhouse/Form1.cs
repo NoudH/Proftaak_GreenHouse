@@ -68,9 +68,9 @@ namespace Project_Greenhouse
                         log.WriteLog("Added " + data[i] + " as a \"Plantsoort\"");
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
-
+                    log.WriteLog(ex.Message);
                 }
             }
         }
@@ -96,14 +96,21 @@ namespace Project_Greenhouse
                     
                 }
             }*/
-            DatabaseIO database = new DatabaseIO();
-            database.ReadPlant();
-            for (int i = 0; i < database.plantnaamls.Count(); i++)
+            try
             {
-                Plant p = new Plant(database.plantnaamls[i], (int)database.benodigdwaterdagmlls[i], database.plantsoortls[i]);
-                plantenLijst.Add(p);
-                TvPlanten.Nodes.Find(p.Soort, false).First().Nodes.Add(p.ToString());
-                log.WriteLog(String.Format("Added {0} of type {1}.", p.ToString(), p.Soort));
+                DatabaseIO database = new DatabaseIO();
+                database.ReadPlant();
+                for (int i = 0; i < database.plantnaamls.Count(); i++)
+                {
+                    Plant p = new Plant(database.plantnaamls[i], (int)database.benodigdwaterdagmlls[i], database.plantsoortls[i]);
+                    plantenLijst.Add(p);
+                    TvPlanten.Nodes.Find(p.Soort, false).First().Nodes.Add(p.ToString());
+                    log.WriteLog(String.Format("Added {0} of type {1}.", p.ToString(), p.Soort));
+                }
+            }
+            catch (Exception ex)
+            {
+                log.WriteLog(ex.Message);
             }
 
         }
