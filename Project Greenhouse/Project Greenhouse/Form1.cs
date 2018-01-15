@@ -40,6 +40,7 @@ namespace Project_Greenhouse
 
         }
 
+//-----Graphs-----//
         //checkbox lichtintensiteit
         private void cbLichtintensiteit_CheckedChanged(object sender, EventArgs e)
         {
@@ -180,29 +181,40 @@ namespace Project_Greenhouse
         private void tbMeetingenPerDag_TextChanged(object sender, EventArgs e)
         {
             //ja dit is niet het meest nauwkeurig
-            tbGenereerTotaalAantalMeetingen.Text = Convert.ToInt32((Convert.ToDouble(tbGeneerDatums.Text) * Convert.ToDouble(tbMeetingenPerDag.Text))).ToString();
+            tbGenereerTotaalAantalMeetingen.Text = Convert.ToInt32((float)(Convert.ToDouble(tbGeneerDatums.Text) * (float)Convert.ToDouble(tbMeetingenPerDag.Text))).ToString();
         }
 
         private void btnGenereerMeetingen_Click(object sender, EventArgs e)
         {
-            try
+            if (tbGenereerTotaalAantalMeetingen.Text != "0" && tbGenereerTotaalAantalMeetingen.Text != "")
             {
-                //database moet eerst geleegd worden
-                if (cbVervangDB.Checked == true)
+                try
                 {
-                    meeting.LeegDB();
+                    //database moet eerst geleegd worden
+                    if (cbVervangDB.Checked == true)
+                    {
+                        meeting.LeegDB();
+                    }
+                    int interval = Convert.ToInt32(tbInterval.Text);
+
+                    //genereer de random data
+                    meeting.GenereerRandomMeetingen(dtpGenereerVan.Value, dtpGenereerTot.Value, interval, cbTijdsEenheid.SelectedIndex, Convert.ToInt32(nudMinLichtintensiteit.Value), Convert.ToInt32(nudMaxLichtintensiteit.Value), Convert.ToInt32(nudADLichtintensiteit.Value), Convert.ToInt32(nudMinTemperatuur.Value), Convert.ToInt32(nudMaxTemperatuur.Value), Convert.ToInt32(nudADTemperatuur.Value), Convert.ToInt32(nudMinLuchtvochtigheid.Value), Convert.ToInt32(nudMaxLuchtvochtigheid.Value), Convert.ToInt32(nudADLuchtvochtigheid.Value), Convert.ToInt32(nudMinGrondvochtigheid.Value), Convert.ToInt32(nudMaxGrondvochtigheid.Value), Convert.ToInt32(nudADGrondvochtigheid.Value));
+
+                    //herlees de database
+                    meeting.ImporteerMeetingenDB();
+
+                    MessageBox.Show(meeting.meetingLijst.Count() + " Meetingen toegevoegd!");
+
+                    //zet het min en max van de datetimepickers goed op basis van de nieuwe meetingen
+                    dateTimePicker1.MinDate = meeting.GetOudsteMeeting().Datum();
+                    dateTimePicker2.MaxDate = meeting.GetNieuwsteMeeting().Datum();
                 }
-                int interval = Convert.ToInt32(tbInterval.Text);
-
-                //genereer de random data
-                meeting.GenereerRandomMeetingen(dtpGenereerVan.Value, dtpGenereerTot.Value, interval, cbTijdsEenheid.SelectedIndex, Convert.ToInt32(nudMinLichtintensiteit.Value), Convert.ToInt32(nudMaxLichtintensiteit.Value), Convert.ToInt32(nudADLichtintensiteit.Value), Convert.ToInt32(nudMinTemperatuur.Value), Convert.ToInt32(nudMaxTemperatuur.Value), Convert.ToInt32(nudADTemperatuur.Value), Convert.ToInt32(nudMinLuchtvochtigheid.Value), Convert.ToInt32(nudMaxLuchtvochtigheid.Value), Convert.ToInt32(nudADLuchtvochtigheid.Value), Convert.ToInt32(nudMinGrondvochtigheid.Value), Convert.ToInt32(nudMaxGrondvochtigheid.Value), Convert.ToInt32(nudADGrondvochtigheid.Value));
-
-                MessageBox.Show(meeting.meetingLijst.Count() + " Meetingen toegevoegd!");
+                catch (Exception exeption)
+                {
+                    MessageBox.Show(exeption.Message);
+                }
             }
-            catch (Exception exeption)
-            {
-                MessageBox.Show(exeption.Message);
-            }
+            else MessageBox.Show("Het aantal meetingen kan niet 0 zijn.", "Error");
         }
     }
 }

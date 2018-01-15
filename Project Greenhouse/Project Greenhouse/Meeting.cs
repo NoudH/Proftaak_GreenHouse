@@ -13,11 +13,11 @@ namespace Project_Greenhouse
     class Meeting
     {
         private DateTime datum;
-        private double lichtintensiteit;
-        private double temperatuur;
-        private double luchtvochtigheid;
-        private double grondvochtigheid1;
-        private double grondvochtigheid2;
+        private float lichtintensiteit;
+        private float temperatuur;
+        private float luchtvochtigheid;
+        private float grondvochtigheid1;
+        private float grondvochtigheid2;
 
         //connection string
         private static string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=" + Application.StartupPath + @"\Meetingen.mdf;Integrated Security=True";
@@ -27,7 +27,7 @@ namespace Project_Greenhouse
         //lijst met alle meetingen
         public List<Meeting> meetingLijst = new List<Meeting>();
 
-        public void ZetEigenschappen(DateTime _datum, double _lichtIntensiteit, double _temperatuur, double _luchtvochtigheid, double _grondvochtigheid1, double _grondvochtigheid2)
+        public void ZetEigenschappen(DateTime _datum, float _lichtIntensiteit, float _temperatuur, float _luchtvochtigheid, float _grondvochtigheid1, float _grondvochtigheid2)
         {
             datum = _datum;
             lichtintensiteit = _lichtIntensiteit;
@@ -42,7 +42,7 @@ namespace Project_Greenhouse
             return datum;
         }
 
-        public double Lichtintensiteit()
+        public float Lichtintensiteit()
         {
             return lichtintensiteit;
         }
@@ -67,7 +67,7 @@ namespace Project_Greenhouse
                 {
                     //maak mod aan
                     Meeting m = new Meeting();
-                    m.ZetEigenschappen(reader.GetDateTime(0), (double)reader.GetDecimal(1), (double)reader.GetDecimal(2), (double)reader.GetDecimal(3), (double)reader.GetDecimal(4), (double)reader.GetDecimal(5));
+                    m.ZetEigenschappen(reader.GetDateTime(0), (float)reader.GetDouble(1), (float)reader.GetDouble(2), (float)reader.GetDouble(3), (float)reader.GetDouble(4), (float)reader.GetDouble(5));
 
                     //voeg mod toe aan modlijst
                     meetingLijst.Add(m);
@@ -78,7 +78,7 @@ namespace Project_Greenhouse
             connection.Close();
         }
 
-        public void AddMeetingDB(DateTime datumTijd, double lichtintensiteit, double temperatuur, double luchtvochtigheid, double grondvochtigheid1, double grondvochtigheid2)
+        public void AddMeetingDB(DateTime datumTijd, float lichtintensiteit, float temperatuur, float luchtvochtigheid, float grondvochtigheid1, float grondvochtigheid2)
         {
             //de query om de meetingen te importeren
             string query = "INSERT INTO Meeting (DatumTijd, Lichtintensiteit, Temperatuur, Luchtvochtigheid, Grondvochtigheid1, Grondvochtigheid2) VALUES (";
@@ -97,7 +97,7 @@ namespace Project_Greenhouse
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show("Fout bij het toevoegen van Meeting aan DB: " + e.Message);
                 connection.Close();
             }            
 
@@ -169,59 +169,154 @@ namespace Project_Greenhouse
             //datum waaraan tijdseenheden worden toegevoegd
             DateTime huidigeDatum = startDatum;
 
-            while (huidigeDatum < eindDatum)
+            float totaalAantalUur = (float)(eindDatum - startDatum).TotalHours;
+
+            float meetingenPerDag = 1.897F;
+            //om te weten of het minimum gevonden is
+            bool indexGevonden = false;
+            //wordt gebruikt voor de switch bij het toevoegen van de tijdseenheid
+            int indexIntervalTussenMeetingen = 0;
+
+            //bereken het aantal meetingen per dag
+            //try was al gebruikt bij de input
+            switch (tijdseenheidIndex)
+            {
+                //seconden
+                case 0:
+                    //aantal seconden in dag*interval
+                    meetingenPerDag = 60 * 60 * 24 * interval;
+                    break;
+                //minuut
+                case 1:
+                    //aantal minuten in dag*interval
+                    meetingenPerDag = 60 * 24 * interval;
+                    break;
+                //uur
+                case 2:
+                    //aantal uur in dag*interval
+                    meetingenPerDag = 24 * interval;
+                    break;
+                //dag
+                case 3:
+                    //is hier gelijk
+                    meetingenPerDag = interval;
+                    break;
+                //week
+                case 4:
+                    //interval / dagen in een week
+                    meetingenPerDag = interval / 7;
+                    break;
+                //maand
+                case 5:
+                    //interval / dagen in een maand
+                    meetingenPerDag = (interval / (365 / 12));
+                    break;
+                //jaar
+                case 6:
+                    //interval / dagen in een jaar
+                    meetingenPerDag = interval / 365;
+                    break;
+            }
+
+            //vergelijk het aantal meetingen dat per dag gedaan moet worden, met de beschikbare tijdseenheden in een dag
+            //als het aantal meetingen per dag > aantal milliseconden in een dag, kan de meeting niet gedaan worden
+            if (meetingenPerDag > 24 * 60 * 60 * 1000)
+            {
+                MessageBox.Show("Een dag heeft niet genoeg milliseconden om unieke meetingen te genereren, verlaag het aantal meetingen per dag en probeer opnieuw.");
+                return;
+            }
+            //jaren
+            //if #meetingen per dag <= #jaar per dag => voeg jaren toe
+            //kleiner of gelijk aan, omdat het nog net past bij gelijk aan
+            if (meetingenPerDag <= 1 / 365 && indexGevonden == false)
+            {
+                indexIntervalTussenMeetingen = 0;
+                indexGevonden = true;
+            }
+            //maanden
+            //if #meetingen per dag <= #maanden per dag => voeg maanden toe
+            if (meetingenPerDag <= 1 / (365 / 12) && indexGevonden == false)
+            {
+                indexIntervalTussenMeetingen = 0;
+                indexGevonden = true;
+            }
+            //weken
+            //if #meetingen per dag <= #weken per dag => voeg weken toe
+            if (meetingenPerDag <= 1 / (365 / 12) && indexGevonden == false)
+            {
+                indexIntervalTussenMeetingen = 0;
+                indexGevonden = true;
+            }
+            //dagen
+            //if #meetingen per dag <= #dagen per dag => voeg dagen toe
+            if (meetingenPerDag <= 1 && indexGevonden == false)
+            {
+                indexIntervalTussenMeetingen = 0;
+                indexGevonden = true;
+            }
+            //uren
+            //if #meetingen per dag <= #uren per dag => voeg uren toe
+            if (meetingenPerDag <= 24 && indexGevonden == false)
+            {
+                indexIntervalTussenMeetingen = 1;
+                indexGevonden = true;
+            }
+            //minuten
+            //if #meetingen per dag <= #minuten per dag => voeg minuten toe
+            if (meetingenPerDag <= 24 * 60 && indexGevonden == false)
+            {
+                indexIntervalTussenMeetingen = 2;
+                indexGevonden = true;
+            }
+            //seconden
+            //if #meetingen per dag <= #seconden per dag => voeg seconden toe
+            if (meetingenPerDag <= 24 * 60 * 60 && indexGevonden == false)
+            {
+                indexIntervalTussenMeetingen = 3;
+                indexGevonden = true;
+            }
+            //milliseconden
+            //if #meetingen per dag <= #ms per dag => voeg milliseconden toe
+            if (meetingenPerDag <= 24 * 60 * 60 * 60 && indexGevonden == false)
+            {
+                indexIntervalTussenMeetingen = 4;
+                indexGevonden = true;
+            }
+
+            //genereer de meetingen
+            while (huidigeDatum <= eindDatum)
             {
                 //de grondvochtigheid wordt 2x random bepaald
                 AddMeetingDB(huidigeDatum, GenereerGetal(LIMin, LIMax, LIAD), GenereerGetal(TMin, TMax, TAD), GenereerGetal(LVMin, LVMax, LVAD), GenereerGetal(GVMin, GVMax, GVAD), GenereerGetal(GVMin, GVMax, GVAD));
 
-                //TRAPJE! 5 meetingen per dag = ...uur toevoegen
-                //        5 meetingen per week = ...dagen toevoegen
-                //        5 meetingen per seconde = ... milliseconden toevoegen
-
-                switch (tijdseenheidIndex)
+                switch (indexIntervalTussenMeetingen)
                 {
-                    //seconden
+                    //OOK BIJ JAREN, WEKEN EN MAANDEN GWN DAGEN TOEVOEGEN
                     case 0:
-                        //1000 ms / #meetingen / per seconde
-                        huidigeDatum = huidigeDatum.AddMilliseconds(1000 / interval);
+                        huidigeDatum = huidigeDatum.AddDays(1 / meetingenPerDag);
                         break;
-                    //minuut
+                    //uren
                     case 1:
-                        //60 seconden / #meetingen per minuut
-                        huidigeDatum = huidigeDatum.AddSeconds(60 / interval);
+                        huidigeDatum = huidigeDatum.AddHours(24 / meetingenPerDag);
                         break;
-                    //uur
+                    //minuten
                     case 2:
-                        //60 minuten / #meetingen per uur
-                        huidigeDatum = huidigeDatum.AddMinutes(60 / interval);
+                        huidigeDatum = huidigeDatum.AddMinutes((24 * 60) / meetingenPerDag);
                         break;
-                    //dag
+                    //seconden
                     case 3:
-                        //24 uur / #meetingen per dag
-                        huidigeDatum = huidigeDatum.AddHours(24 / interval);
+                        huidigeDatum = huidigeDatum.AddSeconds((24 * 60 * 60) / meetingenPerDag);
                         break;
-                    //week
+                    //milliseconden
                     case 4:
-                        //24*7 uur / #meetingen per week
-                        huidigeDatum = huidigeDatum.AddHours((24 * 7) / interval);
-                        break;
-                    //maand
-                    case 5:
-                        //365/12 / #meetingen per maand.............
-                        huidigeDatum = huidigeDatum.AddDays(interval);
-                        break;
-                    //jaar
-                    case 6:
-                        huidigeDatum = huidigeDatum.AddYears(interval);
+                        huidigeDatum = huidigeDatum.AddMilliseconds((24 * 60 * 60 * 60) / meetingenPerDag);
                         break;
                 }
             }
-            //importeer de items
-            ImporteerMeetingenDB();
         }
 
         //genereer een willekeurig getal met een aantal decimalen
-        private double GenereerGetal(int min, int max, int aantalDecimalen)
+        private float GenereerGetal(int min, int max, int aantalDecimalen)
         {
             Random random = new Random();
             //bv: 47.
@@ -232,7 +327,7 @@ namespace Project_Greenhouse
                 Getal += random.Next(0, 9).ToString();
             }
             //bv: 47.21735
-            return Convert.ToDouble(Getal);
+            return (float)Convert.ToDouble(Getal);
         }
     }
 }
