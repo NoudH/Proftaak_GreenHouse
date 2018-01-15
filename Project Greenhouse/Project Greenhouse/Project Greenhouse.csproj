@@ -69,6 +69,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Logging.cs" />
+    <Compile Include="Meeting.cs" />
     <Compile Include="MessageBuilder.cs" />
     <Compile Include="Plant.cs" />
     <Compile Include="PlantSoort.cs" />

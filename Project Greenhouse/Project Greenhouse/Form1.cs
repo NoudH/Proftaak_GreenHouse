@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+//voor cultrure info
+using System.Globalization;
 
 namespace Project_Greenhouse
 {
@@ -18,6 +20,8 @@ namespace Project_Greenhouse
         private Logging log;
         List<Plant> plantenLijst = new List<Plant>();
         List<PlantSoort> soortenLijst = new List<PlantSoort>();
+        //meeting object met actuele meetinglijst
+        Meeting meeting = new Meeting();
         #endregion
 
         #region Form Related        
@@ -45,8 +49,16 @@ namespace Project_Greenhouse
 
             }
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //gebruik altijd amerikaanse notatie voor datums (want database gebruikt deze voor datums)
+            Application.CurrentCulture = CultureInfo.CreateSpecificCulture("en-US");
+            //importeer metingen uit de DB
+            meeting.ImporteerMeetingenDB();
+        }
         #endregion
-        
+
         #region Treeview + Filereading
         void PopulateTreeView()
         {
@@ -307,7 +319,7 @@ namespace Project_Greenhouse
         }
         #endregion
 
-        #region Graphs
+        #region GraphsFile
         private void BtnOpenFile_Click(object sender, EventArgs e)
         {
             OfdDatafile.Filter = "Text file (*.txt) | *.txt";
@@ -364,7 +376,250 @@ namespace Project_Greenhouse
             }
             log.WriteLog("Succesfully drawn charts with date: " + DtpGraphs.Value.ToString());*/
         }
-        #endregion        
+        #endregion
+
+        #region Metingen
+        #region GenereerMetingen
+        private void dtpGenereerVan_ValueChanged(object sender, EventArgs e)
+        {
+            //tel het aantal datums tussen dtpVan en dtpTot en update de tekstbox
+            //wordt afgerond naar int
+            int aantalDagen = (int)((dtpGenereerTot.Value - dtpGenereerVan.Value).TotalDays + 1);
+            tbGeneerDatums.Text = aantalDagen.ToString();
+
+            //zet de minimum en maximum waarden van de datetimepickers
+            dtpGenereerVan.MaxDate = dtpGenereerTot.Value;
+            dtpGenereerTot.MinDate = dtpGenereerVan.Value;
+        }
+
+        private void tbGeneerDatums_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                try
+                {
+                    dtpGenereerTot.Value = dtpGenereerVan.Value.AddDays(Convert.ToInt32(tbGeneerDatums.Text) - 1);
+                }
+                catch (Exception)
+                {
+                }
+            }
+        }
+
+        private void cbTijdsEenheid_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateMeetingenPerDag();
+        }
+
+        private void tbInterval_TextChanged(object sender, EventArgs e)
+        {
+            UpdateMeetingenPerDag();
+        }
+
+        private void UpdateMeetingenPerDag()
+        {
+            //een onjuiste input bij Interval kan het niet laten werken, vandaar try
+            try
+            {
+                switch (cbTijdsEenheid.SelectedIndex)
+                {
+                    //seconden
+                    case 0:
+                        //aantal seconden in dag*interval
+                        tbMeetingenPerDag.Text = (60 * 60 * 24 * Convert.ToDouble(tbInterval.Text)).ToString();
+                        break;
+                    //minuut
+                    case 1:
+                        //aantal minuten in dag*interval
+                        tbMeetingenPerDag.Text = (60 * 24 * Convert.ToDouble(tbInterval.Text)).ToString();
+                        break;
+                    //uur
+                    case 2:
+                        //aantal uur in dag*interval
+                        tbMeetingenPerDag.Text = (24 * Convert.ToDouble(tbInterval.Text)).ToString();
+                        break;
+                    //dag
+                    case 3:
+                        //is hier gelijk
+                        tbMeetingenPerDag.Text = (Convert.ToDouble(tbInterval.Text)).ToString();
+                        break;
+                    //week
+                    case 4:
+                        //interval / dagen in een week
+                        tbMeetingenPerDag.Text = (Convert.ToDouble(tbInterval.Text) / 7).ToString();
+                        break;
+                    //maand
+                    case 5:
+                        //interval / dagen in maand
+                        tbMeetingenPerDag.Text = (Convert.ToDouble(tbInterval.Text) / (365 / 12)).ToString();
+                        break;
+                    //jaar
+                    case 6:
+                        //interval / dagen in jaar
+                        tbMeetingenPerDag.Text = (Convert.ToDouble(tbInterval.Text) / 365).ToString();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+        
+        //bereken totaal aantal meetingen
+        private void tbMeetingenPerDag_TextChanged(object sender, EventArgs e)
+        {
+            //ja dit is niet het meest nauwkeurig
+            tbGenereerTotaalAantalMeetingen.Text = Convert.ToInt32(((float)Convert.ToDouble(tbGeneerDatums.Text) * (float)Convert.ToDouble(tbMeetingenPerDag.Text))).ToString();
+        }
+        private void tbGeneerDatums_TextChanged(object sender, EventArgs e)
+        {
+            tbGenereerTotaalAantalMeetingen.Text = Convert.ToInt32(((float)Convert.ToDouble(tbGeneerDatums.Text) * (float)Convert.ToDouble(tbMeetingenPerDag.Text))).ToString();
+        }
+
+        private void btnGenereerMeetingen_Click(object sender, EventArgs e)
+        {
+            if (tbGenereerTotaalAantalMeetingen.Text != "0" && tbGenereerTotaalAantalMeetingen.Text != "")
+            {
+                try
+                {
+                    //huidig aantal meetingen in de database
+                    int meetinglijstAantalOud = meeting.meetingLijst.Count();
+
+                    //database moet eerst geleegd worden
+                    if (cbVervangDB.Checked == true)
+                    {
+                        meeting.LeegDB();
+                    }
+                    int interval = Convert.ToInt32(tbInterval.Text);
+
+                    //genereer de random data
+                    meeting.GenereerRandomMeetingen(dtpGenereerVan.Value, dtpGenereerTot.Value, interval, cbTijdsEenheid.SelectedIndex, Convert.ToInt32(nudMinLichtintensiteit.Value), Convert.ToInt32(nudMaxLichtintensiteit.Value), Convert.ToInt32(nudADLichtintensiteit.Value), Convert.ToInt32(nudMinTemperatuur.Value), Convert.ToInt32(nudMaxTemperatuur.Value), Convert.ToInt32(nudADTemperatuur.Value), Convert.ToInt32(nudMinGrondvochtigheid.Value), Convert.ToInt32(nudMaxGrondvochtigheid.Value), Convert.ToInt32(nudADGrondvochtigheid.Value));
+
+                    //herlees de database
+                    meeting.ImporteerMeetingenDB();
+
+                    if (cbVervangDB.Checked)
+                    {
+                        MessageBox.Show(meeting.meetingLijst.Count() + " Metingen toegevoegd en " + meetinglijstAantalOud.ToString() + " metingen verwijderd.");
+                    }
+                    else MessageBox.Show((meeting.meetingLijst.Count() - meetinglijstAantalOud).ToString() + " Metingen toegevoegd, dit brengt het totaal op " + meeting.meetingLijst.Count().ToString());
+
+
+                    //zet het min en max van de datetimepickers (in Graph) goed op basis van de nieuwe metingen
+                    dtpGraphVan.MinDate = meeting.GetOudsteMeeting().Datum();
+                    dtpGraphTot.MaxDate = meeting.GetNieuwsteMeeting().Datum();
+                }
+                catch (Exception exeption)
+                {
+                    MessageBox.Show(exeption.Message);
+                }
+            }
+            else MessageBox.Show("Het aantal metingen kan niet 0 zijn.", "Error");
+        }
+        #endregion
+        #region MeetingGraphs
+        private void cbLichtintensiteit_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateChart();
+        }
+
+        private void dtpGraphVan_ValueChanged(object sender, EventArgs e)
+        {
+            //veroorzaakt anders problemen bij een lege DB
+            try
+            {
+                dtpGraphVan.MinDate = meeting.GetOudsteMeeting().Datum();
+                dtpGraphVan.MaxDate = dtpGraphTot.Value;
+
+                dtpGraphTot.MinDate = dtpGraphVan.Value;
+                dtpGraphTot.MaxDate = meeting.GetNieuwsteMeeting().Datum();
+
+                UpdateChart();
+            }
+            catch
+            {
+            }
+        }
+
+        public void UpdateChart()
+        {
+            //lichtintensiteit
+            if (cbLichtintensiteit.Checked)
+            {
+                chartMetingen.Series[0].Points.Clear();
+                foreach (Meeting m in meeting.meetingLijst)
+                {
+                    //als meetpunt binnen de datum valt
+                    if (m.Datum() > dtpGraphVan.Value && m.Datum() < dtpGraphTot.Value)
+                    {
+                        chartMetingen.Series[0].Points.AddXY(m.Datum(), m.Lichtintensiteit());
+                    }
+                }
+            }
+            else
+            {
+                chartMetingen.Series[0].Points.Clear();
+            }
+
+            //temperatuur
+            if (cbTemperatuur.Checked)
+            {
+                chartMetingen.Series[1].Points.Clear();
+                foreach (Meeting m in meeting.meetingLijst)
+                {
+                    //als meetpunt binnen de datum valt
+                    if (m.Datum() > dtpGraphVan.Value && m.Datum() < dtpGraphTot.Value)
+                    {
+                        chartMetingen.Series[1].Points.AddXY(m.Datum(), m.Temperatuur());
+                    }
+                }
+            }
+            else
+            {
+                chartMetingen.Series[1].Points.Clear();
+            }
+
+            //grondvochtigheid1
+            if (cbGrondvochtigheid1.Checked)
+            {
+                chartMetingen.Series[2].Points.Clear();
+                foreach (Meeting m in meeting.meetingLijst)
+                {
+                    //als meetpunt binnen de datum valt
+                    if (m.Datum() > dtpGraphVan.Value && m.Datum() < dtpGraphTot.Value)
+                    {
+                        chartMetingen.Series[2].Points.AddXY(m.Datum(), m.Grondvochtigheid1());
+                    }
+                }
+            }
+            else
+            {
+                chartMetingen.Series[2].Points.Clear();
+            }
+
+            //grondvochtigheid2
+            if (cbGrondvochtigheid2.Checked)
+            {
+                chartMetingen.Series[3].Points.Clear();
+                foreach (Meeting m in meeting.meetingLijst)
+                {
+                    //als meetpunt binnen de datum valt
+                    if (m.Datum() > dtpGraphVan.Value && m.Datum() < dtpGraphTot.Value)
+                    {
+                        chartMetingen.Series[3].Points.AddXY(m.Datum(), m.Grondvochtigheid2());
+                    }
+                }
+            }
+            else
+            {
+                chartMetingen.Series[3].Points.Clear();
+            }
+        }
+        #endregion
+        #endregion
 
         #region Functies
         private Plant FindPlant(string _naam)
@@ -382,6 +637,6 @@ namespace Project_Greenhouse
                 return p.Naam == _naam;
             });
         }
-        #endregion        
+        #endregion
     }
 }
