@@ -324,18 +324,25 @@ namespace Project_Greenhouse
 
             if (OfdDatafile.FileName != "")
             {
-                string[] data = File.ReadAllLines(OfdDatafile.FileName);
-                for (int i = 0; i < data.Length; i += 6)
+                try
                 {
-                    if (DateTime.Parse(data[i + 4]).ToShortDateString() == DtpGraphs.Value.ToShortDateString())
+                    string[] data = File.ReadAllLines(OfdDatafile.FileName);
+                    for (int i = 0; i < data.Length; i += 6)
                     {
-                        ChartTemp.Series[0].Points.AddXY(DateTime.Parse(data[i + 4]).ToShortTimeString(), double.Parse(data[i]));
-                        ChartHumidity.Series[0].Points.AddXY(DateTime.Parse(data[i + 4]).ToShortTimeString(), double.Parse(data[i + 1]));
-                        ChartMoisture.Series[0].Points.AddXY(DateTime.Parse(data[i + 4]).ToShortTimeString(), double.Parse(data[i + 2]));
-                        ChartMoisture.Series[1].Points.AddXY(DateTime.Parse(data[i + 4]).ToShortTimeString(), double.Parse(data[i + 3]));
+                        if (DateTime.Parse(data[i + 4]).ToShortDateString() == DtpGraphs.Value.ToShortDateString())
+                        {
+                            ChartTemp.Series[0].Points.AddXY(DateTime.Parse(data[i + 4]).ToShortTimeString(), double.Parse(data[i]));
+                            ChartHumidity.Series[0].Points.AddXY(DateTime.Parse(data[i + 4]).ToShortTimeString(), double.Parse(data[i + 1]));
+                            ChartMoisture.Series[0].Points.AddXY(DateTime.Parse(data[i + 4]).ToShortTimeString(), double.Parse(data[i + 2]));
+                            ChartMoisture.Series[1].Points.AddXY(DateTime.Parse(data[i + 4]).ToShortTimeString(), double.Parse(data[i + 3]));
+                        }
                     }
+                    log.WriteLog("Succesfully drawn charts with date: " + DtpGraphs.Value.ToString());
                 }
-                log.WriteLog("Succesfully drawn charts with date: " + DtpGraphs.Value.ToString());
+                catch (Exception ex)
+                {
+                    log.WriteLog(ex.Message);
+                }
             }
             else
             {
