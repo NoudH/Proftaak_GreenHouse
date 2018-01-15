@@ -32,15 +32,12 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.TabLogin = new System.Windows.Forms.TabPage();
+            this.TabPlanten = new System.Windows.Forms.TabPage();
+            this.BtnDataArduino = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.BtnAddPlantsoort = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
@@ -60,68 +57,135 @@
             this.TxtPlantnaam = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.TabGraphs = new System.Windows.Forms.TabPage();
-            this.BtnOpenFile = new System.Windows.Forms.Button();
-            this.DtpGraphs = new System.Windows.Forms.DateTimePicker();
-            this.ChartHumidity = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.ChartTemp = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.ChartMoisture = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.TabLiveFeed = new System.Windows.Forms.TabPage();
             this.tabLogs = new System.Windows.Forms.TabPage();
             this.TxtLogging = new System.Windows.Forms.RichTextBox();
+            this.tabGenereerMeetingen = new System.Windows.Forms.TabPage();
+            this.gbGenereer = new System.Windows.Forms.GroupBox();
+            this.tbGenereerTotaalAantalMeetingen = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.btnGenereerMeetingen = new System.Windows.Forms.Button();
+            this.gbGenereerOpties = new System.Windows.Forms.GroupBox();
+            this.cbVervangDB = new System.Windows.Forms.CheckBox();
+            this.gbGenereerAantalDecimalen = new System.Windows.Forms.GroupBox();
+            this.nudADGrondvochtigheid = new System.Windows.Forms.NumericUpDown();
+            this.nudADTemperatuur = new System.Windows.Forms.NumericUpDown();
+            this.nudADLichtintensiteit = new System.Windows.Forms.NumericUpDown();
+            this.gbGenereerMax = new System.Windows.Forms.GroupBox();
+            this.nudMaxGrondvochtigheid = new System.Windows.Forms.NumericUpDown();
+            this.nudMaxTemperatuur = new System.Windows.Forms.NumericUpDown();
+            this.nudMaxLichtintensiteit = new System.Windows.Forms.NumericUpDown();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.gbGenereerMin = new System.Windows.Forms.GroupBox();
+            this.nudMinGrondvochtigheid = new System.Windows.Forms.NumericUpDown();
+            this.nudMinTemperatuur = new System.Windows.Forms.NumericUpDown();
+            this.nudMinLichtintensiteit = new System.Windows.Forms.NumericUpDown();
+            this.gbInterval = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.tbInterval = new System.Windows.Forms.TextBox();
+            this.tbMeetingenPerDag = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.cbTijdsEenheid = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.gbGenereerDatums = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.tbGeneerDatums = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.dtpGenereerVan = new System.Windows.Forms.DateTimePicker();
+            this.dtpGenereerTot = new System.Windows.Forms.DateTimePicker();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.gbGraphPeriode = new System.Windows.Forms.GroupBox();
+            this.dtpGraphVan = new System.Windows.Forms.DateTimePicker();
+            this.dtpGraphTot = new System.Windows.Forms.DateTimePicker();
+            this.gbGraphData = new System.Windows.Forms.GroupBox();
+            this.cbLichtintensiteit = new System.Windows.Forms.CheckBox();
+            this.cbGrondvochtigheid2 = new System.Windows.Forms.CheckBox();
+            this.cbTemperatuur = new System.Windows.Forms.CheckBox();
+            this.cbGrondvochtigheid1 = new System.Windows.Forms.CheckBox();
+            this.chartMetingen = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.OfdDatafile = new System.Windows.Forms.OpenFileDialog();
             this.readMessageTimer = new System.Windows.Forms.Timer(this.components);
-            this.BtnDataArduino = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
-            this.TabLogin.SuspendLayout();
+            this.TabPlanten.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudWater)).BeginInit();
-            this.TabGraphs.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ChartHumidity)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ChartTemp)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ChartMoisture)).BeginInit();
             this.tabLogs.SuspendLayout();
+            this.tabGenereerMeetingen.SuspendLayout();
+            this.gbGenereer.SuspendLayout();
+            this.gbGenereerOpties.SuspendLayout();
+            this.gbGenereerAantalDecimalen.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudADGrondvochtigheid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudADTemperatuur)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudADLichtintensiteit)).BeginInit();
+            this.gbGenereerMax.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxGrondvochtigheid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxTemperatuur)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxLichtintensiteit)).BeginInit();
+            this.gbGenereerMin.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMinGrondvochtigheid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMinTemperatuur)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMinLichtintensiteit)).BeginInit();
+            this.gbInterval.SuspendLayout();
+            this.gbGenereerDatums.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.gbGraphPeriode.SuspendLayout();
+            this.gbGraphData.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartMetingen)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.TabLogin);
-            this.tabControl1.Controls.Add(this.TabGraphs);
+            this.tabControl1.Controls.Add(this.TabPlanten);
             this.tabControl1.Controls.Add(this.TabLiveFeed);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabLogs);
+            this.tabControl1.Controls.Add(this.tabGenereerMeetingen);
             this.tabControl1.Location = new System.Drawing.Point(0, 1);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(813, 491);
             this.tabControl1.TabIndex = 0;
             // 
-            // TabLogin
+            // TabPlanten
             // 
-            this.TabLogin.Controls.Add(this.BtnDataArduino);
-            this.TabLogin.Controls.Add(this.groupBox3);
-            this.TabLogin.Controls.Add(this.label5);
-            this.TabLogin.Controls.Add(this.CbPlantNummer);
-            this.TabLogin.Controls.Add(this.BtnConnect);
-            this.TabLogin.Controls.Add(this.label4);
-            this.TabLogin.Controls.Add(this.CbPlantsoort);
-            this.TabLogin.Controls.Add(this.TvPlanten);
-            this.TabLogin.Controls.Add(this.BtnSendPlant);
-            this.TabLogin.Controls.Add(this.BtnRemovePlant);
-            this.TabLogin.Controls.Add(this.BtnAddPlant);
-            this.TabLogin.Controls.Add(this.label3);
-            this.TabLogin.Controls.Add(this.NudWater);
-            this.TabLogin.Controls.Add(this.label2);
-            this.TabLogin.Controls.Add(this.TxtPlantnaam);
-            this.TabLogin.Controls.Add(this.label1);
-            this.TabLogin.Controls.Add(this.groupBox2);
-            this.TabLogin.Location = new System.Drawing.Point(4, 22);
-            this.TabLogin.Name = "TabLogin";
-            this.TabLogin.Size = new System.Drawing.Size(805, 465);
-            this.TabLogin.TabIndex = 2;
-            this.TabLogin.Text = "Planten";
-            this.TabLogin.UseVisualStyleBackColor = true;
+            this.TabPlanten.Controls.Add(this.BtnDataArduino);
+            this.TabPlanten.Controls.Add(this.groupBox3);
+            this.TabPlanten.Controls.Add(this.label5);
+            this.TabPlanten.Controls.Add(this.CbPlantNummer);
+            this.TabPlanten.Controls.Add(this.BtnConnect);
+            this.TabPlanten.Controls.Add(this.label4);
+            this.TabPlanten.Controls.Add(this.CbPlantsoort);
+            this.TabPlanten.Controls.Add(this.TvPlanten);
+            this.TabPlanten.Controls.Add(this.BtnSendPlant);
+            this.TabPlanten.Controls.Add(this.BtnRemovePlant);
+            this.TabPlanten.Controls.Add(this.BtnAddPlant);
+            this.TabPlanten.Controls.Add(this.label3);
+            this.TabPlanten.Controls.Add(this.NudWater);
+            this.TabPlanten.Controls.Add(this.label2);
+            this.TabPlanten.Controls.Add(this.TxtPlantnaam);
+            this.TabPlanten.Controls.Add(this.label1);
+            this.TabPlanten.Controls.Add(this.groupBox2);
+            this.TabPlanten.Location = new System.Drawing.Point(4, 22);
+            this.TabPlanten.Name = "TabPlanten";
+            this.TabPlanten.Size = new System.Drawing.Size(805, 465);
+            this.TabPlanten.TabIndex = 2;
+            this.TabPlanten.Text = "Planten";
+            this.TabPlanten.UseVisualStyleBackColor = true;
+            // 
+            // BtnDataArduino
+            // 
+            this.BtnDataArduino.Enabled = false;
+            this.BtnDataArduino.Location = new System.Drawing.Point(9, 435);
+            this.BtnDataArduino.Name = "BtnDataArduino";
+            this.BtnDataArduino.Size = new System.Drawing.Size(139, 23);
+            this.BtnDataArduino.TabIndex = 17;
+            this.BtnDataArduino.Text = "Lees data van arduino";
+            this.BtnDataArduino.UseVisualStyleBackColor = true;
+            this.BtnDataArduino.Click += new System.EventHandler(this.BtnDataArduino_Click);
             // 
             // groupBox3
             // 
@@ -301,142 +365,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Planten";
             // 
-            // TabGraphs
-            // 
-            this.TabGraphs.Controls.Add(this.BtnOpenFile);
-            this.TabGraphs.Controls.Add(this.DtpGraphs);
-            this.TabGraphs.Controls.Add(this.ChartHumidity);
-            this.TabGraphs.Controls.Add(this.ChartTemp);
-            this.TabGraphs.Controls.Add(this.groupBox1);
-            this.TabGraphs.Location = new System.Drawing.Point(4, 22);
-            this.TabGraphs.Name = "TabGraphs";
-            this.TabGraphs.Padding = new System.Windows.Forms.Padding(3);
-            this.TabGraphs.Size = new System.Drawing.Size(805, 465);
-            this.TabGraphs.TabIndex = 0;
-            this.TabGraphs.Text = "Graphs";
-            this.TabGraphs.UseVisualStyleBackColor = true;
-            // 
-            // BtnOpenFile
-            // 
-            this.BtnOpenFile.Location = new System.Drawing.Point(54, 9);
-            this.BtnOpenFile.Name = "BtnOpenFile";
-            this.BtnOpenFile.Size = new System.Drawing.Size(75, 20);
-            this.BtnOpenFile.TabIndex = 6;
-            this.BtnOpenFile.Text = "Open File";
-            this.BtnOpenFile.UseVisualStyleBackColor = true;
-            this.BtnOpenFile.Click += new System.EventHandler(this.BtnOpenFile_Click);
-            // 
-            // DtpGraphs
-            // 
-            this.DtpGraphs.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.DtpGraphs.Location = new System.Drawing.Point(135, 9);
-            this.DtpGraphs.Name = "DtpGraphs";
-            this.DtpGraphs.Size = new System.Drawing.Size(105, 20);
-            this.DtpGraphs.TabIndex = 4;
-            this.DtpGraphs.ValueChanged += new System.EventHandler(this.DtpGraphs_ValueChanged);
-            // 
-            // ChartHumidity
-            // 
-            chartArea1.Name = "ChartArea1";
-            chartArea1.Position.Auto = false;
-            chartArea1.Position.Height = 90F;
-            chartArea1.Position.Width = 94F;
-            chartArea1.Position.X = 3F;
-            chartArea1.Position.Y = 10F;
-            this.ChartHumidity.ChartAreas.Add(chartArea1);
-            legend1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            legend1.IsTextAutoFit = false;
-            legend1.Name = "Legend1";
-            legend1.Position.Auto = false;
-            legend1.Position.Height = 9F;
-            legend1.Position.Width = 39.48368F;
-            legend1.Position.X = 60F;
-            legend1.Position.Y = 4F;
-            this.ChartHumidity.Legends.Add(legend1);
-            this.ChartHumidity.Location = new System.Drawing.Point(406, 32);
-            this.ChartHumidity.Name = "ChartHumidity";
-            series1.BorderWidth = 3;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series1.Legend = "Legend1";
-            series1.Name = "Licht intensiteit";
-            this.ChartHumidity.Series.Add(series1);
-            this.ChartHumidity.Size = new System.Drawing.Size(393, 201);
-            this.ChartHumidity.TabIndex = 3;
-            this.ChartHumidity.Text = "chart2";
-            // 
-            // ChartTemp
-            // 
-            chartArea2.Name = "ChartArea1";
-            chartArea2.Position.Auto = false;
-            chartArea2.Position.Height = 90F;
-            chartArea2.Position.Width = 94F;
-            chartArea2.Position.X = 3F;
-            chartArea2.Position.Y = 10F;
-            this.ChartTemp.ChartAreas.Add(chartArea2);
-            legend2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            legend2.IsTextAutoFit = false;
-            legend2.Name = "Legend1";
-            legend2.Position.Auto = false;
-            legend2.Position.Height = 9F;
-            legend2.Position.Width = 45.07463F;
-            legend2.Position.X = 54.92537F;
-            legend2.Position.Y = 4F;
-            this.ChartTemp.Legends.Add(legend2);
-            this.ChartTemp.Location = new System.Drawing.Point(8, 32);
-            this.ChartTemp.Name = "ChartTemp";
-            this.ChartTemp.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Bright;
-            series2.BorderWidth = 3;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series2.Legend = "Legend1";
-            series2.Name = "Temperatuur in °C";
-            this.ChartTemp.Series.Add(series2);
-            this.ChartTemp.Size = new System.Drawing.Size(403, 201);
-            this.ChartTemp.TabIndex = 2;
-            this.ChartTemp.Text = "chart3";
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.ChartMoisture);
-            this.groupBox1.Location = new System.Drawing.Point(3, 240);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(796, 222);
-            this.groupBox1.TabIndex = 5;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Grondvochtigheid:";
-            // 
-            // ChartMoisture
-            // 
-            chartArea3.Name = "ChartArea1";
-            chartArea3.Position.Auto = false;
-            chartArea3.Position.Height = 94F;
-            chartArea3.Position.Width = 81.21519F;
-            chartArea3.Position.Y = 3F;
-            this.ChartMoisture.ChartAreas.Add(chartArea3);
-            legend3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            legend3.IsTextAutoFit = false;
-            legend3.Name = "Legend1";
-            this.ChartMoisture.Legends.Add(legend3);
-            this.ChartMoisture.Location = new System.Drawing.Point(6, 15);
-            this.ChartMoisture.Name = "ChartMoisture";
-            this.ChartMoisture.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Fire;
-            series3.BorderWidth = 3;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series3.Legend = "Legend1";
-            series3.Name = "Plant 1";
-            series4.BorderWidth = 3;
-            series4.ChartArea = "ChartArea1";
-            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
-            series4.Legend = "Legend1";
-            series4.Name = "Plant 2";
-            this.ChartMoisture.Series.Add(series3);
-            this.ChartMoisture.Series.Add(series4);
-            this.ChartMoisture.Size = new System.Drawing.Size(784, 197);
-            this.ChartMoisture.TabIndex = 0;
-            this.ChartMoisture.Text = "chart1";
-            // 
             // TabLiveFeed
             // 
             this.TabLiveFeed.Location = new System.Drawing.Point(4, 22);
@@ -465,22 +393,607 @@
             this.TxtLogging.TabIndex = 1;
             this.TxtLogging.Text = "";
             // 
+            // tabGenereerMeetingen
+            // 
+            this.tabGenereerMeetingen.Controls.Add(this.gbGenereer);
+            this.tabGenereerMeetingen.Controls.Add(this.gbInterval);
+            this.tabGenereerMeetingen.Controls.Add(this.gbGenereerDatums);
+            this.tabGenereerMeetingen.Location = new System.Drawing.Point(4, 22);
+            this.tabGenereerMeetingen.Name = "tabGenereerMeetingen";
+            this.tabGenereerMeetingen.Size = new System.Drawing.Size(805, 465);
+            this.tabGenereerMeetingen.TabIndex = 5;
+            this.tabGenereerMeetingen.Text = "Genereer Meetingen";
+            this.tabGenereerMeetingen.UseVisualStyleBackColor = true;
+            // 
+            // gbGenereer
+            // 
+            this.gbGenereer.Controls.Add(this.tbGenereerTotaalAantalMeetingen);
+            this.gbGenereer.Controls.Add(this.label8);
+            this.gbGenereer.Controls.Add(this.btnGenereerMeetingen);
+            this.gbGenereer.Controls.Add(this.gbGenereerOpties);
+            this.gbGenereer.Location = new System.Drawing.Point(8, 219);
+            this.gbGenereer.Name = "gbGenereer";
+            this.gbGenereer.Size = new System.Drawing.Size(792, 243);
+            this.gbGenereer.TabIndex = 9;
+            this.gbGenereer.TabStop = false;
+            this.gbGenereer.Text = "Genereer";
+            // 
+            // tbGenereerTotaalAantalMeetingen
+            // 
+            this.tbGenereerTotaalAantalMeetingen.Location = new System.Drawing.Point(255, 200);
+            this.tbGenereerTotaalAantalMeetingen.Name = "tbGenereerTotaalAantalMeetingen";
+            this.tbGenereerTotaalAantalMeetingen.ReadOnly = true;
+            this.tbGenereerTotaalAantalMeetingen.Size = new System.Drawing.Size(232, 20);
+            this.tbGenereerTotaalAantalMeetingen.TabIndex = 3;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(6, 203);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(243, 13);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "Totaal aantal (geschatte) meetingen te genereren:";
+            // 
+            // btnGenereerMeetingen
+            // 
+            this.btnGenereerMeetingen.Location = new System.Drawing.Point(619, 182);
+            this.btnGenereerMeetingen.Name = "btnGenereerMeetingen";
+            this.btnGenereerMeetingen.Size = new System.Drawing.Size(167, 55);
+            this.btnGenereerMeetingen.TabIndex = 1;
+            this.btnGenereerMeetingen.Text = "Genereer";
+            this.btnGenereerMeetingen.UseVisualStyleBackColor = true;
+            this.btnGenereerMeetingen.Click += new System.EventHandler(this.btnGenereerMeetingen_Click);
+            // 
+            // gbGenereerOpties
+            // 
+            this.gbGenereerOpties.Controls.Add(this.cbVervangDB);
+            this.gbGenereerOpties.Controls.Add(this.gbGenereerAantalDecimalen);
+            this.gbGenereerOpties.Controls.Add(this.gbGenereerMax);
+            this.gbGenereerOpties.Controls.Add(this.label11);
+            this.gbGenereerOpties.Controls.Add(this.label10);
+            this.gbGenereerOpties.Controls.Add(this.label9);
+            this.gbGenereerOpties.Controls.Add(this.gbGenereerMin);
+            this.gbGenereerOpties.Location = new System.Drawing.Point(9, 28);
+            this.gbGenereerOpties.Name = "gbGenereerOpties";
+            this.gbGenereerOpties.Size = new System.Drawing.Size(777, 132);
+            this.gbGenereerOpties.TabIndex = 0;
+            this.gbGenereerOpties.TabStop = false;
+            this.gbGenereerOpties.Text = "Opties";
+            // 
+            // cbVervangDB
+            // 
+            this.cbVervangDB.AutoSize = true;
+            this.cbVervangDB.Checked = true;
+            this.cbVervangDB.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbVervangDB.Location = new System.Drawing.Point(507, 19);
+            this.cbVervangDB.Name = "cbVervangDB";
+            this.cbVervangDB.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.cbVervangDB.Size = new System.Drawing.Size(97, 17);
+            this.cbVervangDB.TabIndex = 7;
+            this.cbVervangDB.Text = "Leeg database";
+            this.cbVervangDB.UseVisualStyleBackColor = true;
+            // 
+            // gbGenereerAantalDecimalen
+            // 
+            this.gbGenereerAantalDecimalen.Controls.Add(this.nudADGrondvochtigheid);
+            this.gbGenereerAantalDecimalen.Controls.Add(this.nudADTemperatuur);
+            this.gbGenereerAantalDecimalen.Controls.Add(this.nudADLichtintensiteit);
+            this.gbGenereerAantalDecimalen.Location = new System.Drawing.Point(314, 17);
+            this.gbGenereerAantalDecimalen.Name = "gbGenereerAantalDecimalen";
+            this.gbGenereerAantalDecimalen.Size = new System.Drawing.Size(107, 99);
+            this.gbGenereerAantalDecimalen.TabIndex = 6;
+            this.gbGenereerAantalDecimalen.TabStop = false;
+            this.gbGenereerAantalDecimalen.Text = "Aantal Decimalen";
+            // 
+            // nudADGrondvochtigheid
+            // 
+            this.nudADGrondvochtigheid.Location = new System.Drawing.Point(6, 68);
+            this.nudADGrondvochtigheid.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.nudADGrondvochtigheid.Name = "nudADGrondvochtigheid";
+            this.nudADGrondvochtigheid.Size = new System.Drawing.Size(86, 20);
+            this.nudADGrondvochtigheid.TabIndex = 3;
+            this.nudADGrondvochtigheid.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            // 
+            // nudADTemperatuur
+            // 
+            this.nudADTemperatuur.Location = new System.Drawing.Point(6, 42);
+            this.nudADTemperatuur.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.nudADTemperatuur.Name = "nudADTemperatuur";
+            this.nudADTemperatuur.Size = new System.Drawing.Size(86, 20);
+            this.nudADTemperatuur.TabIndex = 1;
+            this.nudADTemperatuur.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            // 
+            // nudADLichtintensiteit
+            // 
+            this.nudADLichtintensiteit.Location = new System.Drawing.Point(6, 16);
+            this.nudADLichtintensiteit.Maximum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.nudADLichtintensiteit.Name = "nudADLichtintensiteit";
+            this.nudADLichtintensiteit.Size = new System.Drawing.Size(86, 20);
+            this.nudADLichtintensiteit.TabIndex = 0;
+            this.nudADLichtintensiteit.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            // 
+            // gbGenereerMax
+            // 
+            this.gbGenereerMax.Controls.Add(this.nudMaxGrondvochtigheid);
+            this.gbGenereerMax.Controls.Add(this.nudMaxTemperatuur);
+            this.gbGenereerMax.Controls.Add(this.nudMaxLichtintensiteit);
+            this.gbGenereerMax.Location = new System.Drawing.Point(210, 17);
+            this.gbGenereerMax.Name = "gbGenereerMax";
+            this.gbGenereerMax.Size = new System.Drawing.Size(98, 99);
+            this.gbGenereerMax.TabIndex = 4;
+            this.gbGenereerMax.TabStop = false;
+            this.gbGenereerMax.Text = "Max Waarde";
+            // 
+            // nudMaxGrondvochtigheid
+            // 
+            this.nudMaxGrondvochtigheid.Location = new System.Drawing.Point(6, 68);
+            this.nudMaxGrondvochtigheid.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nudMaxGrondvochtigheid.Name = "nudMaxGrondvochtigheid";
+            this.nudMaxGrondvochtigheid.Size = new System.Drawing.Size(86, 20);
+            this.nudMaxGrondvochtigheid.TabIndex = 3;
+            this.nudMaxGrondvochtigheid.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // nudMaxTemperatuur
+            // 
+            this.nudMaxTemperatuur.Location = new System.Drawing.Point(6, 42);
+            this.nudMaxTemperatuur.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nudMaxTemperatuur.Name = "nudMaxTemperatuur";
+            this.nudMaxTemperatuur.Size = new System.Drawing.Size(86, 20);
+            this.nudMaxTemperatuur.TabIndex = 1;
+            this.nudMaxTemperatuur.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // nudMaxLichtintensiteit
+            // 
+            this.nudMaxLichtintensiteit.Location = new System.Drawing.Point(6, 16);
+            this.nudMaxLichtintensiteit.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nudMaxLichtintensiteit.Name = "nudMaxLichtintensiteit";
+            this.nudMaxLichtintensiteit.Size = new System.Drawing.Size(86, 20);
+            this.nudMaxLichtintensiteit.TabIndex = 0;
+            this.nudMaxLichtintensiteit.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(6, 87);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(94, 13);
+            this.label11.TabIndex = 5;
+            this.label11.Text = "Grondvochtigheid:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(6, 61);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(70, 13);
+            this.label10.TabIndex = 3;
+            this.label10.Text = "Temperatuur:";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(6, 35);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(77, 13);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "Lichtintensiteit:";
+            // 
+            // gbGenereerMin
+            // 
+            this.gbGenereerMin.Controls.Add(this.nudMinGrondvochtigheid);
+            this.gbGenereerMin.Controls.Add(this.nudMinTemperatuur);
+            this.gbGenereerMin.Controls.Add(this.nudMinLichtintensiteit);
+            this.gbGenereerMin.Location = new System.Drawing.Point(106, 17);
+            this.gbGenereerMin.Name = "gbGenereerMin";
+            this.gbGenereerMin.Size = new System.Drawing.Size(98, 99);
+            this.gbGenereerMin.TabIndex = 2;
+            this.gbGenereerMin.TabStop = false;
+            this.gbGenereerMin.Text = "Min Waarde";
+            // 
+            // nudMinGrondvochtigheid
+            // 
+            this.nudMinGrondvochtigheid.Location = new System.Drawing.Point(6, 68);
+            this.nudMinGrondvochtigheid.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nudMinGrondvochtigheid.Name = "nudMinGrondvochtigheid";
+            this.nudMinGrondvochtigheid.Size = new System.Drawing.Size(86, 20);
+            this.nudMinGrondvochtigheid.TabIndex = 3;
+            // 
+            // nudMinTemperatuur
+            // 
+            this.nudMinTemperatuur.Location = new System.Drawing.Point(6, 42);
+            this.nudMinTemperatuur.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nudMinTemperatuur.Name = "nudMinTemperatuur";
+            this.nudMinTemperatuur.Size = new System.Drawing.Size(86, 20);
+            this.nudMinTemperatuur.TabIndex = 1;
+            // 
+            // nudMinLichtintensiteit
+            // 
+            this.nudMinLichtintensiteit.Location = new System.Drawing.Point(6, 16);
+            this.nudMinLichtintensiteit.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.nudMinLichtintensiteit.Name = "nudMinLichtintensiteit";
+            this.nudMinLichtintensiteit.Size = new System.Drawing.Size(86, 20);
+            this.nudMinLichtintensiteit.TabIndex = 0;
+            // 
+            // gbInterval
+            // 
+            this.gbInterval.Controls.Add(this.label7);
+            this.gbInterval.Controls.Add(this.tbInterval);
+            this.gbInterval.Controls.Add(this.tbMeetingenPerDag);
+            this.gbInterval.Controls.Add(this.label13);
+            this.gbInterval.Controls.Add(this.cbTijdsEenheid);
+            this.gbInterval.Controls.Add(this.label14);
+            this.gbInterval.Location = new System.Drawing.Point(8, 125);
+            this.gbInterval.Name = "gbInterval";
+            this.gbInterval.Size = new System.Drawing.Size(792, 52);
+            this.gbInterval.TabIndex = 8;
+            this.gbInterval.TabStop = false;
+            this.gbInterval.Text = "Interval";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(642, 21);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(79, 13);
+            this.label7.TabIndex = 12;
+            this.label7.Text = "meetingen/dag";
+            // 
+            // tbInterval
+            // 
+            this.tbInterval.Location = new System.Drawing.Point(9, 19);
+            this.tbInterval.Name = "tbInterval";
+            this.tbInterval.Size = new System.Drawing.Size(100, 20);
+            this.tbInterval.TabIndex = 0;
+            this.tbInterval.Text = "1";
+            this.tbInterval.TextChanged += new System.EventHandler(this.tbInterval_TextChanged);
+            // 
+            // tbMeetingenPerDag
+            // 
+            this.tbMeetingenPerDag.Location = new System.Drawing.Point(569, 18);
+            this.tbMeetingenPerDag.MaxLength = 6;
+            this.tbMeetingenPerDag.Name = "tbMeetingenPerDag";
+            this.tbMeetingenPerDag.ReadOnly = true;
+            this.tbMeetingenPerDag.Size = new System.Drawing.Size(67, 20);
+            this.tbMeetingenPerDag.TabIndex = 11;
+            this.tbMeetingenPerDag.Text = "1";
+            this.tbMeetingenPerDag.TextChanged += new System.EventHandler(this.tbMeetingenPerDag_TextChanged);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(513, 21);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(50, 13);
+            this.label13.TabIndex = 10;
+            this.label13.Text = "Dit is/zijn";
+            // 
+            // cbTijdsEenheid
+            // 
+            this.cbTijdsEenheid.FormattingEnabled = true;
+            this.cbTijdsEenheid.Items.AddRange(new object[] {
+            "Seconde",
+            "Minuut",
+            "Uur",
+            "Dag",
+            "Week",
+            "Maand",
+            "Jaar"});
+            this.cbTijdsEenheid.Location = new System.Drawing.Point(204, 18);
+            this.cbTijdsEenheid.Name = "cbTijdsEenheid";
+            this.cbTijdsEenheid.Size = new System.Drawing.Size(94, 21);
+            this.cbTijdsEenheid.TabIndex = 1;
+            this.cbTijdsEenheid.SelectedIndexChanged += new System.EventHandler(this.cbTijdsEenheid_SelectedIndexChanged);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(115, 22);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(89, 13);
+            this.label14.TabIndex = 2;
+            this.label14.Text = "Meetingen elk(e):";
+            // 
+            // gbGenereerDatums
+            // 
+            this.gbGenereerDatums.Controls.Add(this.label15);
+            this.gbGenereerDatums.Controls.Add(this.tbGeneerDatums);
+            this.gbGenereerDatums.Controls.Add(this.label16);
+            this.gbGenereerDatums.Controls.Add(this.label17);
+            this.gbGenereerDatums.Controls.Add(this.label18);
+            this.gbGenereerDatums.Controls.Add(this.dtpGenereerVan);
+            this.gbGenereerDatums.Controls.Add(this.dtpGenereerTot);
+            this.gbGenereerDatums.Location = new System.Drawing.Point(8, 13);
+            this.gbGenereerDatums.Name = "gbGenereerDatums";
+            this.gbGenereerDatums.Size = new System.Drawing.Size(792, 79);
+            this.gbGenereerDatums.TabIndex = 7;
+            this.gbGenereerDatums.TabStop = false;
+            this.gbGenereerDatums.Text = "Datums";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(642, 44);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(43, 13);
+            this.label15.TabIndex = 9;
+            this.label15.Text = "dag(en)";
+            // 
+            // tbGeneerDatums
+            // 
+            this.tbGeneerDatums.Location = new System.Drawing.Point(569, 41);
+            this.tbGeneerDatums.MaxLength = 6;
+            this.tbGeneerDatums.Name = "tbGeneerDatums";
+            this.tbGeneerDatums.Size = new System.Drawing.Size(67, 20);
+            this.tbGeneerDatums.TabIndex = 8;
+            this.tbGeneerDatums.Text = "1";
+            this.tbGeneerDatums.TextChanged += new System.EventHandler(this.tbGeneerDatums_TextChanged);
+            this.tbGeneerDatums.KeyUp += new System.Windows.Forms.KeyEventHandler(this.tbGeneerDatums_KeyUp);
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(513, 44);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(50, 13);
+            this.label16.TabIndex = 7;
+            this.label16.Text = "Dit is/zijn";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(6, 25);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(29, 13);
+            this.label17.TabIndex = 5;
+            this.label17.Text = "Van:";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(240, 25);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(26, 13);
+            this.label18.TabIndex = 6;
+            this.label18.Text = "Tot:";
+            // 
+            // dtpGenereerVan
+            // 
+            this.dtpGenereerVan.Location = new System.Drawing.Point(9, 41);
+            this.dtpGenereerVan.Name = "dtpGenereerVan";
+            this.dtpGenereerVan.Size = new System.Drawing.Size(200, 20);
+            this.dtpGenereerVan.TabIndex = 3;
+            this.dtpGenereerVan.ValueChanged += new System.EventHandler(this.dtpGenereerVan_ValueChanged);
+            // 
+            // dtpGenereerTot
+            // 
+            this.dtpGenereerTot.Location = new System.Drawing.Point(243, 41);
+            this.dtpGenereerTot.Name = "dtpGenereerTot";
+            this.dtpGenereerTot.Size = new System.Drawing.Size(200, 20);
+            this.dtpGenereerTot.TabIndex = 4;
+            this.dtpGenereerTot.ValueChanged += new System.EventHandler(this.dtpGenereerVan_ValueChanged);
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.gbGraphPeriode);
+            this.tabPage1.Controls.Add(this.gbGraphData);
+            this.tabPage1.Controls.Add(this.chartMetingen);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(805, 465);
+            this.tabPage1.TabIndex = 6;
+            this.tabPage1.Text = "Graphs";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // gbGraphPeriode
+            // 
+            this.gbGraphPeriode.Controls.Add(this.dtpGraphVan);
+            this.gbGraphPeriode.Controls.Add(this.dtpGraphTot);
+            this.gbGraphPeriode.Location = new System.Drawing.Point(8, 7);
+            this.gbGraphPeriode.Name = "gbGraphPeriode";
+            this.gbGraphPeriode.Size = new System.Drawing.Size(423, 54);
+            this.gbGraphPeriode.TabIndex = 7;
+            this.gbGraphPeriode.TabStop = false;
+            this.gbGraphPeriode.Text = "Periode";
+            // 
+            // dtpGraphVan
+            // 
+            this.dtpGraphVan.Location = new System.Drawing.Point(6, 19);
+            this.dtpGraphVan.Name = "dtpGraphVan";
+            this.dtpGraphVan.Size = new System.Drawing.Size(200, 20);
+            this.dtpGraphVan.TabIndex = 1;
+            this.dtpGraphVan.ValueChanged += new System.EventHandler(this.dtpGraphVan_ValueChanged);
+            // 
+            // dtpGraphTot
+            // 
+            this.dtpGraphTot.Location = new System.Drawing.Point(212, 19);
+            this.dtpGraphTot.Name = "dtpGraphTot";
+            this.dtpGraphTot.Size = new System.Drawing.Size(200, 20);
+            this.dtpGraphTot.TabIndex = 2;
+            this.dtpGraphTot.ValueChanged += new System.EventHandler(this.dtpGraphVan_ValueChanged);
+            // 
+            // gbGraphData
+            // 
+            this.gbGraphData.Controls.Add(this.cbLichtintensiteit);
+            this.gbGraphData.Controls.Add(this.cbGrondvochtigheid2);
+            this.gbGraphData.Controls.Add(this.cbTemperatuur);
+            this.gbGraphData.Controls.Add(this.cbGrondvochtigheid1);
+            this.gbGraphData.Location = new System.Drawing.Point(8, 67);
+            this.gbGraphData.Name = "gbGraphData";
+            this.gbGraphData.Size = new System.Drawing.Size(141, 106);
+            this.gbGraphData.TabIndex = 6;
+            this.gbGraphData.TabStop = false;
+            this.gbGraphData.Text = "Data";
+            // 
+            // cbLichtintensiteit
+            // 
+            this.cbLichtintensiteit.AutoSize = true;
+            this.cbLichtintensiteit.Location = new System.Drawing.Point(5, 18);
+            this.cbLichtintensiteit.Margin = new System.Windows.Forms.Padding(2);
+            this.cbLichtintensiteit.Name = "cbLichtintensiteit";
+            this.cbLichtintensiteit.Size = new System.Drawing.Size(93, 17);
+            this.cbLichtintensiteit.TabIndex = 0;
+            this.cbLichtintensiteit.Text = "Lichtintensiteit";
+            this.cbLichtintensiteit.UseVisualStyleBackColor = true;
+            this.cbLichtintensiteit.CheckedChanged += new System.EventHandler(this.cbLichtintensiteit_CheckedChanged);
+            // 
+            // cbGrondvochtigheid2
+            // 
+            this.cbGrondvochtigheid2.AutoSize = true;
+            this.cbGrondvochtigheid2.Location = new System.Drawing.Point(5, 83);
+            this.cbGrondvochtigheid2.Margin = new System.Windows.Forms.Padding(2);
+            this.cbGrondvochtigheid2.Name = "cbGrondvochtigheid2";
+            this.cbGrondvochtigheid2.Size = new System.Drawing.Size(119, 17);
+            this.cbGrondvochtigheid2.TabIndex = 4;
+            this.cbGrondvochtigheid2.Text = "Grondvochtigheid 2";
+            this.cbGrondvochtigheid2.UseVisualStyleBackColor = true;
+            this.cbGrondvochtigheid2.CheckedChanged += new System.EventHandler(this.cbLichtintensiteit_CheckedChanged);
+            // 
+            // cbTemperatuur
+            // 
+            this.cbTemperatuur.AutoSize = true;
+            this.cbTemperatuur.Location = new System.Drawing.Point(5, 40);
+            this.cbTemperatuur.Margin = new System.Windows.Forms.Padding(2);
+            this.cbTemperatuur.Name = "cbTemperatuur";
+            this.cbTemperatuur.Size = new System.Drawing.Size(86, 17);
+            this.cbTemperatuur.TabIndex = 1;
+            this.cbTemperatuur.Text = "Temperatuur";
+            this.cbTemperatuur.UseVisualStyleBackColor = true;
+            this.cbTemperatuur.CheckedChanged += new System.EventHandler(this.cbLichtintensiteit_CheckedChanged);
+            // 
+            // cbGrondvochtigheid1
+            // 
+            this.cbGrondvochtigheid1.AutoSize = true;
+            this.cbGrondvochtigheid1.Location = new System.Drawing.Point(5, 61);
+            this.cbGrondvochtigheid1.Margin = new System.Windows.Forms.Padding(2);
+            this.cbGrondvochtigheid1.Name = "cbGrondvochtigheid1";
+            this.cbGrondvochtigheid1.Size = new System.Drawing.Size(119, 17);
+            this.cbGrondvochtigheid1.TabIndex = 3;
+            this.cbGrondvochtigheid1.Text = "Grondvochtigheid 1";
+            this.cbGrondvochtigheid1.UseVisualStyleBackColor = true;
+            this.cbGrondvochtigheid1.CheckedChanged += new System.EventHandler(this.cbLichtintensiteit_CheckedChanged);
+            // 
+            // chartMetingen
+            // 
+            chartArea1.Name = "ChartArea1";
+            chartArea1.Position.Auto = false;
+            chartArea1.Position.Height = 95F;
+            chartArea1.Position.Width = 84F;
+            chartArea1.Position.X = 16F;
+            chartArea1.Position.Y = 3F;
+            this.chartMetingen.ChartAreas.Add(chartArea1);
+            legend1.BackImageAlignment = System.Windows.Forms.DataVisualization.Charting.ChartImageAlignmentStyle.Left;
+            legend1.Name = "Legend1";
+            legend1.Position.Auto = false;
+            legend1.Position.Height = 16.8798F;
+            legend1.Position.Width = 22.13622F;
+            legend1.Position.Y = 31F;
+            this.chartMetingen.Legends.Add(legend1);
+            this.chartMetingen.Location = new System.Drawing.Point(8, 67);
+            this.chartMetingen.Margin = new System.Windows.Forms.Padding(2);
+            this.chartMetingen.Name = "chartMetingen";
+            series1.BorderWidth = 2;
+            series1.ChartArea = "ChartArea1";
+            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series1.Legend = "Legend1";
+            series1.Name = "Lichtintensiteit";
+            series1.ToolTip = "\"L: #VAL{P1}\"";
+            series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series2.BorderWidth = 2;
+            series2.ChartArea = "ChartArea1";
+            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series2.Legend = "Legend1";
+            series2.Name = "Temperatuur";
+            series2.ToolTip = "\"T: #VAL{P1}\"";
+            series2.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series3.BorderWidth = 2;
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series3.Legend = "Legend1";
+            series3.Name = "Grondvochtigheid1";
+            series3.ToolTip = "\"G1: #VAL{P1}\"";
+            series3.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            series4.BorderWidth = 2;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
+            series4.Legend = "Legend1";
+            series4.Name = "Grondvochtigheid2";
+            series4.ToolTip = "\"G2: #VAL{P1}\"";
+            series4.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.DateTime;
+            this.chartMetingen.Series.Add(series1);
+            this.chartMetingen.Series.Add(series2);
+            this.chartMetingen.Series.Add(series3);
+            this.chartMetingen.Series.Add(series4);
+            this.chartMetingen.Size = new System.Drawing.Size(793, 392);
+            this.chartMetingen.TabIndex = 4;
+            this.chartMetingen.Text = "Metingen";
+            // 
             // readMessageTimer
             // 
             this.readMessageTimer.Enabled = true;
             this.readMessageTimer.Interval = 10;
             this.readMessageTimer.Tick += new System.EventHandler(this.readMessageTimer_Tick);
-            // 
-            // BtnDataArduino
-            // 
-            this.BtnDataArduino.Enabled = false;
-            this.BtnDataArduino.Location = new System.Drawing.Point(9, 435);
-            this.BtnDataArduino.Name = "BtnDataArduino";
-            this.BtnDataArduino.Size = new System.Drawing.Size(139, 23);
-            this.BtnDataArduino.TabIndex = 17;
-            this.BtnDataArduino.Text = "Lees data van arduino";
-            this.BtnDataArduino.UseVisualStyleBackColor = true;
-            this.BtnDataArduino.Click += new System.EventHandler(this.BtnDataArduino_Click);
             // 
             // Form1
             // 
@@ -491,18 +1004,40 @@
             this.Name = "Form1";
             this.Text = "Project Greenhouse";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.tabControl1.ResumeLayout(false);
-            this.TabLogin.ResumeLayout(false);
-            this.TabLogin.PerformLayout();
+            this.TabPlanten.ResumeLayout(false);
+            this.TabPlanten.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NudWater)).EndInit();
-            this.TabGraphs.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ChartHumidity)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ChartTemp)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ChartMoisture)).EndInit();
             this.tabLogs.ResumeLayout(false);
+            this.tabGenereerMeetingen.ResumeLayout(false);
+            this.gbGenereer.ResumeLayout(false);
+            this.gbGenereer.PerformLayout();
+            this.gbGenereerOpties.ResumeLayout(false);
+            this.gbGenereerOpties.PerformLayout();
+            this.gbGenereerAantalDecimalen.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nudADGrondvochtigheid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudADTemperatuur)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudADLichtintensiteit)).EndInit();
+            this.gbGenereerMax.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxGrondvochtigheid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxTemperatuur)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMaxLichtintensiteit)).EndInit();
+            this.gbGenereerMin.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.nudMinGrondvochtigheid)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMinTemperatuur)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudMinLichtintensiteit)).EndInit();
+            this.gbInterval.ResumeLayout(false);
+            this.gbInterval.PerformLayout();
+            this.gbGenereerDatums.ResumeLayout(false);
+            this.gbGenereerDatums.PerformLayout();
+            this.tabPage1.ResumeLayout(false);
+            this.gbGraphPeriode.ResumeLayout(false);
+            this.gbGraphData.ResumeLayout(false);
+            this.gbGraphData.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartMetingen)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -510,9 +1045,8 @@
         #endregion
 
         private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage TabGraphs;
         private System.Windows.Forms.TabPage TabLiveFeed;
-        private System.Windows.Forms.TabPage TabLogin;
+        private System.Windows.Forms.TabPage TabPlanten;
         private System.Windows.Forms.TabPage tabLogs;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox TxtPlantnaam;
@@ -522,13 +1056,7 @@
         private System.Windows.Forms.Button BtnAddPlant;
         private System.Windows.Forms.Button BtnRemovePlant;
         private System.Windows.Forms.Button BtnSendPlant;
-        private System.Windows.Forms.DataVisualization.Charting.Chart ChartHumidity;
-        private System.Windows.Forms.DataVisualization.Charting.Chart ChartTemp;
-        private System.Windows.Forms.DataVisualization.Charting.Chart ChartMoisture;
-        private System.Windows.Forms.DateTimePicker DtpGraphs;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.OpenFileDialog OfdDatafile;
-        private System.Windows.Forms.Button BtnOpenFile;
         private System.Windows.Forms.TreeView TvPlanten;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox CbPlantsoort;
@@ -543,6 +1071,53 @@
         private System.Windows.Forms.TextBox TxtPlantsoortNaam;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button BtnDataArduino;
+        private System.Windows.Forms.TabPage tabGenereerMeetingen;
+        private System.Windows.Forms.GroupBox gbGenereer;
+        private System.Windows.Forms.TextBox tbGenereerTotaalAantalMeetingen;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Button btnGenereerMeetingen;
+        private System.Windows.Forms.GroupBox gbGenereerOpties;
+        private System.Windows.Forms.CheckBox cbVervangDB;
+        private System.Windows.Forms.GroupBox gbGenereerAantalDecimalen;
+        private System.Windows.Forms.NumericUpDown nudADGrondvochtigheid;
+        private System.Windows.Forms.NumericUpDown nudADTemperatuur;
+        private System.Windows.Forms.NumericUpDown nudADLichtintensiteit;
+        private System.Windows.Forms.GroupBox gbGenereerMax;
+        private System.Windows.Forms.NumericUpDown nudMaxGrondvochtigheid;
+        private System.Windows.Forms.NumericUpDown nudMaxTemperatuur;
+        private System.Windows.Forms.NumericUpDown nudMaxLichtintensiteit;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.GroupBox gbGenereerMin;
+        private System.Windows.Forms.NumericUpDown nudMinGrondvochtigheid;
+        private System.Windows.Forms.NumericUpDown nudMinTemperatuur;
+        private System.Windows.Forms.NumericUpDown nudMinLichtintensiteit;
+        private System.Windows.Forms.GroupBox gbInterval;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox tbInterval;
+        private System.Windows.Forms.TextBox tbMeetingenPerDag;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.ComboBox cbTijdsEenheid;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.GroupBox gbGenereerDatums;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.TextBox tbGeneerDatums;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.DateTimePicker dtpGenereerVan;
+        private System.Windows.Forms.DateTimePicker dtpGenereerTot;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.CheckBox cbGrondvochtigheid2;
+        private System.Windows.Forms.CheckBox cbGrondvochtigheid1;
+        private System.Windows.Forms.CheckBox cbTemperatuur;
+        private System.Windows.Forms.CheckBox cbLichtintensiteit;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartMetingen;
+        private System.Windows.Forms.DateTimePicker dtpGraphTot;
+        private System.Windows.Forms.DateTimePicker dtpGraphVan;
+        private System.Windows.Forms.GroupBox gbGraphPeriode;
+        private System.Windows.Forms.GroupBox gbGraphData;
     }
 }
 
