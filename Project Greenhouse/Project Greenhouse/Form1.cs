@@ -77,7 +77,7 @@ namespace Project_Greenhouse
 
         void ReadPlantFile()
         {
-            if (File.Exists("PlantFile.txt"))
+            /*if (File.Exists("PlantFile.txt"))
             {
                 try
                 {                    
@@ -87,7 +87,7 @@ namespace Project_Greenhouse
                         Plant p = new Plant(data[i], int.Parse(data[i + 1]), data[i + 2]);
                         plantenLijst.Add(p);
                         //TvPlanten.Nodes.Add(p.ToString());
-                        TvPlanten.Nodes.Find(p.Soort, false).First().Nodes.Add(p.ToString());
+                        
                         log.WriteLog(String.Format("Added {0} of type {1}.", p.ToString(), p.Soort));
                     }
                 }
@@ -95,6 +95,15 @@ namespace Project_Greenhouse
                 {
                     
                 }
+            }*/
+            DatabaseIO database = new DatabaseIO();
+            database.ReadPlant();
+            for (int i = 0; i < database.plantnaamls.Count(); i++)
+            {
+                Plant p = new Plant(database.plantnaamls[i], (int)database.benodigdwaterdagmlls[i], database.plantsoortls[i]);
+                plantenLijst.Add(p);
+                TvPlanten.Nodes.Find(p.Soort, false).First().Nodes.Add(p.ToString());
+                log.WriteLog(String.Format("Added {0} of type {1}.", p.ToString(), p.Soort));
             }
 
         }
@@ -119,7 +128,9 @@ namespace Project_Greenhouse
                 plantenLijst.Add(p);
                 TvPlanten.Nodes.Find(p.Soort, false).First().Nodes.Add(p.ToString(), p.ToString());
 
-                File.AppendAllLines("PlantFile.txt", new string[] { String.Format("{0}\n{1}\n{2}\n", TxtPlantnaam.Text, ((int)NudWater.Value).ToString(), CbPlantsoort.Text) });
+                //File.AppendAllLines("PlantFile.txt", new string[] { String.Format("{0}\n{1}\n{2}\n", TxtPlantnaam.Text, ((int)NudWater.Value).ToString(), CbPlantsoort.Text) });
+                DatabaseIO database = new DatabaseIO(TxtPlantnaam.Text, (float)NudWater.Value, CbPlantsoort.Text);
+                database.OpslaanPlant();
                 log.WriteLog(String.Format("Added plant with properties: Naam:{0}, Grondvochtigheid:{1}, Soort:{2}", p.Naam, p.Water, p.Soort));
             }
             else
@@ -153,17 +164,9 @@ namespace Project_Greenhouse
                     TvPlanten.Nodes.Remove(TvPlanten.SelectedNode);
                 }
                 else
-                {                    
-                    FileContent = File.ReadAllLines("PlantFile.txt").ToList();
-                    int index = FileContent.FindIndex(delegate (string g)
-                    {
-                        return g == TvPlanten.SelectedNode.Text;
-                    });
-
-                    FileContent.RemoveRange(index, 4);
-                    File.WriteAllLines("PlantFile.txt", FileContent);
-
-                    log.WriteLog("Removed Plant " + FindPlant(TvPlanten.SelectedNode.Text).ToString());
+                {
+                    DatabaseIO database = new DatabaseIO();
+                    database.DeletePlant(TvPlanten.SelectedNode.Text);
 
                     plantenLijst.Remove(FindPlant(TvPlanten.SelectedNode.Text));
                     TvPlanten.Nodes.Remove(TvPlanten.SelectedNode);
@@ -211,7 +214,6 @@ namespace Project_Greenhouse
             }
         }
 
-        //TODO: Voeg waardes toe aan database
         private void processReceivedMessage(string message)
         {
             if (message.StartsWith("temp:"))
@@ -236,8 +238,19 @@ namespace Project_Greenhouse
             }
             else if (message.StartsWith("date:"))
             {
-                DateTime date = DateTime.Parse(message.Substring(message.IndexOf(":") + 1, message.Length - (message.IndexOf(":") + 1)));
-                File.AppendAllText("Data.txt", date.ToString() + "\n\n");
+                try
+                {
+                    DateTime date = DateTime.Parse(message.Substring(message.IndexOf(":") + 1, message.Length - (message.IndexOf(":") + 1)));
+                    string[] data = File.ReadAllLines("Data.txt");
+                    File.AppendAllText("Data.txt", date.ToString() + "\n\n");
+
+                    DatabaseIO database = new DatabaseIO(float.Parse(data[data.Length - 4]), float.Parse(data[data.Length - 3]), float.Parse(data[data.Length - 2]), float.Parse(data[data.Length - 1]), date);
+                    database.Opslaan();                    
+                }
+                catch (Exception ex)
+                {
+                    log.WriteLog(ex.Message);
+                }
             }
         }
 
@@ -322,6 +335,20 @@ namespace Project_Greenhouse
                 MessageBox.Show("No file selected!", "Error!");
                 log.WriteLog("Failed to draw charts, no file was selected!");
             }
+
+            /*DatabaseIO database = new DatabaseIO();
+            database.Leesgegevens(DateTime.Parse(DtpGraphs.Value.ToShortDateString()));
+
+            for (int i = 0; i < database.datumtijdls.Count(); i++)
+            {
+
+                ChartTemp.Series[0].Points.AddXY(database.datumtijdls[i].ToShortTimeString(), (double)database.temperatuurls[i]);
+                ChartHumidity.Series[0].Points.AddXY(database.datumtijdls[i].ToShortTimeString(), (double)database.lichtintensietijdls[i]);
+                ChartMoisture.Series[0].Points.AddXY(database.datumtijdls[i].ToShortTimeString(), (double)database.grondvochtigheidp1ls[i]);
+                ChartMoisture.Series[1].Points.AddXY(database.datumtijdls[i].ToShortTimeString(), (double)database.grondvochtigheidp2ls[i]);
+
+            }
+            log.WriteLog("Succesfully drawn charts with date: " + DtpGraphs.Value.ToString());*/
         }
         #endregion        
 
