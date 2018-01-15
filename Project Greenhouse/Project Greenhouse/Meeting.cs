@@ -169,9 +169,7 @@ namespace Project_Greenhouse
             //datum waaraan tijdseenheden worden toegevoegd
             DateTime huidigeDatum = startDatum;
 
-            float totaalAantalUur = (float)(eindDatum - startDatum).TotalHours;
-
-            float meetingenPerDag = 1.897F;
+            float meetingenPerDag = 1;
             //om te weten of het minimum gevonden is
             bool indexGevonden = false;
             //wordt gebruikt voor de switch bij het toevoegen van de tijdseenheid
@@ -204,17 +202,17 @@ namespace Project_Greenhouse
                 //week
                 case 4:
                     //interval / dagen in een week
-                    meetingenPerDag = interval / 7;
+                    meetingenPerDag = interval / 7f;
                     break;
                 //maand
                 case 5:
                     //interval / dagen in een maand
-                    meetingenPerDag = (interval / (365 / 12));
+                    meetingenPerDag = interval / (365 / 12f);
                     break;
                 //jaar
                 case 6:
                     //interval / dagen in een jaar
-                    meetingenPerDag = interval / 365;
+                    meetingenPerDag = interval / 365f;
                     break;
             }
 
@@ -228,21 +226,21 @@ namespace Project_Greenhouse
             //jaren
             //if #meetingen per dag <= #jaar per dag => voeg jaren toe
             //kleiner of gelijk aan, omdat het nog net past bij gelijk aan
-            if (meetingenPerDag <= 1 / 365 && indexGevonden == false)
+            if (meetingenPerDag <= 1f / 365 && indexGevonden == false)
             {
                 indexIntervalTussenMeetingen = 0;
                 indexGevonden = true;
             }
             //maanden
             //if #meetingen per dag <= #maanden per dag => voeg maanden toe
-            if (meetingenPerDag <= 1 / (365 / 12) && indexGevonden == false)
+            if (meetingenPerDag <= 1f / (365 / 12) && indexGevonden == false)
             {
                 indexIntervalTussenMeetingen = 0;
                 indexGevonden = true;
             }
             //weken
             //if #meetingen per dag <= #weken per dag => voeg weken toe
-            if (meetingenPerDag <= 1 / (365 / 12) && indexGevonden == false)
+            if (meetingenPerDag <= 1f / (365 / 12) && indexGevonden == false)
             {
                 indexIntervalTussenMeetingen = 0;
                 indexGevonden = true;
@@ -293,23 +291,23 @@ namespace Project_Greenhouse
                 {
                     //OOK BIJ JAREN, WEKEN EN MAANDEN GWN DAGEN TOEVOEGEN
                     case 0:
-                        huidigeDatum = huidigeDatum.AddDays(1 / meetingenPerDag);
+                        huidigeDatum = huidigeDatum.AddDays(1f / meetingenPerDag);
                         break;
                     //uren
                     case 1:
-                        huidigeDatum = huidigeDatum.AddHours(24 / meetingenPerDag);
+                        huidigeDatum = huidigeDatum.AddHours(24f / meetingenPerDag);
                         break;
                     //minuten
                     case 2:
-                        huidigeDatum = huidigeDatum.AddMinutes((24 * 60) / meetingenPerDag);
+                        huidigeDatum = huidigeDatum.AddMinutes((24f * 60) / meetingenPerDag);
                         break;
                     //seconden
                     case 3:
-                        huidigeDatum = huidigeDatum.AddSeconds((24 * 60 * 60) / meetingenPerDag);
+                        huidigeDatum = huidigeDatum.AddSeconds((24f * 60 * 60) / meetingenPerDag);
                         break;
                     //milliseconden
                     case 4:
-                        huidigeDatum = huidigeDatum.AddMilliseconds((24 * 60 * 60 * 60) / meetingenPerDag);
+                        huidigeDatum = huidigeDatum.AddMilliseconds((24f * 60 * 60 * 60) / meetingenPerDag);
                         break;
                 }
             }

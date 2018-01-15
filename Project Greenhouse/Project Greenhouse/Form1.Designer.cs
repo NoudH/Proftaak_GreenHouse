@@ -41,8 +41,8 @@
             this.cbTemperatuur = new System.Windows.Forms.CheckBox();
             this.cbLichtintensiteit = new System.Windows.Forms.CheckBox();
             this.chartMeetingen = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.dtpGraphTot = new System.Windows.Forms.DateTimePicker();
+            this.dtpGraphVan = new System.Windows.Forms.DateTimePicker();
             this.TabLiveFeed = new System.Windows.Forms.TabPage();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.tabLogs = new System.Windows.Forms.TabPage();
@@ -142,8 +142,8 @@
             // 
             this.TabGraphs.Controls.Add(this.pnlGrafiek);
             this.TabGraphs.Controls.Add(this.chartMeetingen);
-            this.TabGraphs.Controls.Add(this.dateTimePicker2);
-            this.TabGraphs.Controls.Add(this.dateTimePicker1);
+            this.TabGraphs.Controls.Add(this.dtpGraphTot);
+            this.TabGraphs.Controls.Add(this.dtpGraphVan);
             this.TabGraphs.Location = new System.Drawing.Point(4, 22);
             this.TabGraphs.Name = "TabGraphs";
             this.TabGraphs.Padding = new System.Windows.Forms.Padding(3);
@@ -247,19 +247,19 @@
             // 
             // dateTimePicker2
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(214, 34);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker2.TabIndex = 2;
-            this.dateTimePicker2.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
+            this.dtpGraphTot.Location = new System.Drawing.Point(214, 34);
+            this.dtpGraphTot.Name = "dateTimePicker2";
+            this.dtpGraphTot.Size = new System.Drawing.Size(200, 20);
+            this.dtpGraphTot.TabIndex = 2;
+            this.dtpGraphTot.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(8, 34);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
-            this.dateTimePicker1.TabIndex = 1;
-            this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
+            this.dtpGraphVan.Location = new System.Drawing.Point(8, 34);
+            this.dtpGraphVan.Name = "dateTimePicker1";
+            this.dtpGraphVan.Size = new System.Drawing.Size(200, 20);
+            this.dtpGraphVan.TabIndex = 1;
+            this.dtpGraphVan.ValueChanged += new System.EventHandler(this.dateTimePicker2_ValueChanged);
             // 
             // TabLiveFeed
             // 
@@ -853,8 +853,8 @@
         private System.Windows.Forms.TabPage tabLogs;
 
         private System.Windows.Forms.TextBox TxtLogging;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker dtpGraphTot;
+        private System.Windows.Forms.DateTimePicker dtpGraphVan;
         private System.Windows.Forms.Panel pnlGrafiek;
         private System.Windows.Forms.Label lblData;
         private System.Windows.Forms.CheckBox cbGrondvochtigheid2;

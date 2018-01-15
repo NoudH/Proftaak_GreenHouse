@@ -53,11 +53,11 @@ namespace Project_Greenhouse
             //veroorzaakt anders problemen bij een lege DB
             try
             {
-                dateTimePicker1.MinDate = meeting.GetOudsteMeeting().Datum();
-                dateTimePicker1.MaxDate = dateTimePicker2.Value;
+                dtpGraphVan.MinDate = meeting.GetOudsteMeeting().Datum();
+                dtpGraphVan.MaxDate = dtpGraphTot.Value;
 
-                dateTimePicker2.MinDate = dateTimePicker1.Value;
-                dateTimePicker2.MaxDate = meeting.GetNieuwsteMeeting().Datum();
+                dtpGraphTot.MinDate = dtpGraphVan.Value;
+                dtpGraphTot.MaxDate = meeting.GetNieuwsteMeeting().Datum();
 
                 UpdateChart();
             }
@@ -79,7 +79,7 @@ namespace Project_Greenhouse
                 foreach (Meeting m in meeting.meetingLijst)
                 {
                     //als meetpunt binnen de datum valt
-                    if (m.Datum() > dateTimePicker1.Value && m.Datum() < dateTimePicker2.Value)
+                    if (m.Datum() > dtpGraphVan.Value && m.Datum() < dtpGraphTot.Value)
                     {
                         chartMeetingen.Series[0].Points.AddXY(m.Datum(), m.Lichtintensiteit());
                     }
@@ -181,7 +181,7 @@ namespace Project_Greenhouse
         private void tbMeetingenPerDag_TextChanged(object sender, EventArgs e)
         {
             //ja dit is niet het meest nauwkeurig
-            tbGenereerTotaalAantalMeetingen.Text = Convert.ToInt32((float)(Convert.ToDouble(tbGeneerDatums.Text) * (float)Convert.ToDouble(tbMeetingenPerDag.Text))).ToString();
+            tbGenereerTotaalAantalMeetingen.Text = Convert.ToInt32(((float)Convert.ToDouble(tbGeneerDatums.Text) * (float)Convert.ToDouble(tbMeetingenPerDag.Text))).ToString();
         }
 
         private void btnGenereerMeetingen_Click(object sender, EventArgs e)
@@ -206,8 +206,8 @@ namespace Project_Greenhouse
                     MessageBox.Show(meeting.meetingLijst.Count() + " Meetingen toegevoegd!");
 
                     //zet het min en max van de datetimepickers goed op basis van de nieuwe meetingen
-                    dateTimePicker1.MinDate = meeting.GetOudsteMeeting().Datum();
-                    dateTimePicker2.MaxDate = meeting.GetNieuwsteMeeting().Datum();
+                    dtpGraphVan.MinDate = meeting.GetOudsteMeeting().Datum();
+                    dtpGraphTot.MaxDate = meeting.GetNieuwsteMeeting().Datum();
                 }
                 catch (Exception exeption)
                 {
